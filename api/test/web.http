@@ -1,0 +1,102 @@
+# WEB
+
+### Obtener todas las páginas web
+GET http://localhost:3000/api/web
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDSUYiOiJIMDM4NzIzNDciLCJpYXQiOjE3Mjk2MTM5NTV9.VjtRsKQyzbihbUQ94KjS-JfEt5dj_nGiuXPxghD8bas
+
+### Obtener una página web por su ID
+GET http://localhost:3000/api/web/L98302673
+Content-Type: application/json
+
+
+### Crear una nueva página web
+POST http://localhost:3000/api/web
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDSUYiOiJIMDM4NzIzNDgiLCJpYXQiOjE3MzIwMzc5MTN9.qvMTZP5vFDfL1wZKEj6C41-9O-8a62JjDvoq_PnYw6U
+
+{
+    "businessCIF": "H03872348",
+    "city": "Barcelona",
+    "activity": "Restaurante",
+    "heading": "Delicias de Barcelona",
+    "summary": "Un restaurante con las mejores comidas de la ciudad."
+}
+
+### Crear una nueva página web
+POST http://localhost:3000/api/web
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDSUYiOiJNOTg0OTgzOTgiLCJpYXQiOjE3MzIwMzc5NTF9.VmfnUD2vRlaJ0t7R0NoXIOZxE08QU9aZF6k8iabkJug
+
+{
+    "businessCIF": "M98498398",
+    "city": "Madrid",
+    "activity": "Restaurante",
+    "heading": "Bollos de Madrid",
+    "summary": "Un restaurante con los mejores bollos de la ciudad."
+}
+
+
+### Modificar una página web existente
+PUT http://localhost:3000/api/web/L98302673
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDSUYiOiJMOTgzMDI2NzMiLCJpYXQiOjE3MzA4MjU2NTd9.xXiaa1PgHMcgndjDNlLEjWsKysB0KbIa94FPrcmgRVU
+
+{
+    "businessCIF": "L98302673",
+    "city": "Barcelona",
+    "activity": "Restaurante",
+    "heading": "Delicias de Barcelona",
+    "summary": "Un restaurante con las mejores tapas de la ciudad."
+}
+
+### Añadir la URL de la imagen a la base de datos y la original a storage
+PATCH http://localhost:3000/api/web//memory/addimage/L98302673 
+Content-Type: multipart/form-data; boundary=Boundry
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDSUYiOiJMOTgzMDI2NzMiLCJpYXQiOjE3MzA4MjU2NTd9.xXiaa1PgHMcgndjDNlLEjWsKysB0KbIa94FPrcmgRVU
+
+--Boundry
+Content-Disposition: form-data; name="image"; filename="restaurante2.jpg"
+Content-Type: ./image/jpg
+
+< ../images/restaurante2.jpg
+--Boundry--
+
+### Añadir un texto a la base de datos
+
+PATCH http://localhost:3000/api/web/addtext/L98302673
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDSUYiOiJMOTgzMDI2NzMiLCJpYXQiOjE3MzA4MjU2NTd9.xXiaa1PgHMcgndjDNlLEjWsKysB0KbIa94FPrcmgRVU
+
+{
+    "textArray": "menú a 10€"
+}
+
+### Archivar una página web (borrado lógico)
+DELETE http://localhost:3000/api/web/H03872347?logic=true
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDSUYiOiJIMDM4NzIzNDciLCJpYXQiOjE3Mjk2MTM5NTV9.VjtRsKQyzbihbUQ94KjS-JfEt5dj_nGiuXPxghD8bas
+
+### Llamada para restaurar un borrado lógico
+PUT http://localhost:3000/api/web/restore/H03872347
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDSUYiOiJIMDM4NzIzNDciLCJpYXQiOjE3Mjk2MTM5NTV9.VjtRsKQyzbihbUQ94KjS-JfEt5dj_nGiuXPxghD8bas
+
+### Eliminar una página web (borrado físico)
+DELETE http://localhost:3000/api/web/H03872347?logic=false
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDSUYiOiJIMDM4NzIzNDciLCJpYXQiOjE3Mjk2MTM5NTV9.VjtRsKQyzbihbUQ94KjS-JfEt5dj_nGiuXPxghD8bas
+
+### Buscar webs en una ciudad específica y con una actividad específica, ordenadas por scoring
+GET http://localhost:3000/api/web/search/empty/Restaurante?sortByScoring=true&upwards=false
+Content-Type: application/json
+
+### Añadir una reseña a una web
+PATCH http://localhost:3000/api/web/addreview/M98498398
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzNjYjFjMjVjM2ZkYjJhYWY5NTFiYTQiLCJyb2xlIjoidXNlciIsImlhdCI6MTczMjAzODA0MCwiZXhwIjoxNzMyMTI0NDQwfQ.1SDS4tloQFDR-uqY5O1n2s61nTjBt-KJ5i6lkHNEjb0
+
+{
+    "scoring": 2,
+    "reviewText": "So bad"
+}

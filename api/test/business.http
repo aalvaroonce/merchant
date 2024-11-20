@@ -1,0 +1,118 @@
+#BUSINESS
+#TOKEN INDITEX eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDSUYiOiJIMDM4NzIzNDciLCJpYXQiOjE3Mjk2MTM5NTV9.VjtRsKQyzbihbUQ94KjS-JfEt5dj_nGiuXPxghD8bas
+# Guardar un comercio
+POST http://localhost:3000/api/business 
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzFmZjk5ZjhiZWFiMWUyOGY0MGMxYjUiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzA4MjUwMzUsImV4cCI6MTczMDkxMTQzNX0.6Osav3csXzp2VEvT5hSm1eKn2ELZNu_26gganTikEGY
+
+{
+    "name":"Inditex",
+    "CIF":"H03872348",
+    "direction": "c/ velazquez 37",
+    "email":"inditex@email.com",
+    "phone":"334503455",
+    "pageID": 2334
+}
+
+### Guardar un comercio
+# TOKEN PRIMARK eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDSUYiOiJQMTI4NzIzNDAiLCJpYXQiOjE3Mjk2MTM5Nzh9.njdIcTwavzXVQRIiA5OInRNBG7l1KRshyiwGt9tFjYE
+POST http://localhost:3000/api/business 
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzFmZjk5ZjhiZWFiMWUyOGY0MGMxYjUiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzA4MjUwMzUsImV4cCI6MTczMDkxMTQzNX0.6Osav3csXzp2VEvT5hSm1eKn2ELZNu_26gganTikEGY
+
+{
+    "name":"Alcampo",
+    "CIF":"M98498398",
+    "direction":"c/ serrano 10",
+    "email":"primark@email.com",
+    "phone":"336772882",
+    "pageID": 8363
+}
+###
+POST http://localhost:3000/api/business 
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzFmZjk5ZjhiZWFiMWUyOGY0MGMxYjUiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzA4MjUwMzUsImV4cCI6MTczMDkxMTQzNX0.6Osav3csXzp2VEvT5hSm1eKn2ELZNu_26gganTikEGY
+
+{
+    "name":"Leroy",
+    "CIF":"L98302673",
+    "direction":"c/ serrano 10",
+    "email":"leroi@email.com",
+    "phone":"336722882",
+    "pageID": 8732
+}
+###
+POST http://localhost:3000/api/business 
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzFmZjk5ZjhiZWFiMWUyOGY0MGMxYjUiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzA2Njc0OTEsImV4cCI6MTczMDc1Mzg5MX0.ofBYYoDRpvFVjtz9muxi9VRh_E_wxDKz98MPs3Yk8KU
+
+{
+    "name":"Primark",
+    "CIF":"P12832340",
+    "direction":"c/ serrano 10",
+    "email":"primark@email.com",
+    "phone":"336772882",
+    "pageID": 8363
+}
+
+### Obtener la lista de comercios
+GET http://localhost:3000/api/business
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzE3YjVlYjc2NmVlNTNhNzE1MmVhYTgiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3Mjk2MTI1NTgsImV4cCI6MTcyOTY5ODk1OH0.Yprt2OkgzTDaJyTWnp1zIErtsmp3k6aPP6QcMOMNQjk
+
+### Obtener los mails de los usuarios abiertos a ofertas
+GET http://localhost:3000/api/business/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzE3YjVlYjc2NmVlNTNhNzE1MmVhYTgiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzAxMTU3NTUsImV4cCI6MTczMDIwMjE1NX0.gu4A_jbAnXs4Q41KCoaKUt9JWIx1G_L5hdAA7JSpgZU
+
+### Obtener la lista de comercios ordenados ascendentemente
+GET http://localhost:3000/api/business?upwards=true
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzE3YjVlYjc2NmVlNTNhNzE1MmVhYTgiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3Mjk2MTI1NTgsImV4cCI6MTcyOTY5ODk1OH0.Yprt2OkgzTDaJyTWnp1zIErtsmp3k6aPP6QcMOMNQjk
+
+
+### Obtener la lista de comercios ordenados descendentemente
+GET http://localhost:3000/api/business?upwards=false
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzE3YjVlYjc2NmVlNTNhNzE1MmVhYTgiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3Mjk2MTI1NTgsImV4cCI6MTcyOTY5ODk1OH0.Yprt2OkgzTDaJyTWnp1zIErtsmp3k6aPP6QcMOMNQjk
+
+
+### Obtener un comercio por su CIF
+GET http://localhost:3000/api/business/H03872347
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzE3YjVlYjc2NmVlNTNhNzE1MmVhYTgiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3Mjk2MTI1NTgsImV4cCI6MTcyOTY5ODk1OH0.Yprt2OkgzTDaJyTWnp1zIErtsmp3k6aPP6QcMOMNQjk
+
+
+### Modificar un comercio a partir de su CIF
+PUT http://localhost:3000/api/business/P12872340
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzE3YjVlYjc2NmVlNTNhNzE1MmVhYTgiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3Mjk2MTI1NTgsImV4cCI6MTcyOTY5ODk1OH0.Yprt2OkgzTDaJyTWnp1zIErtsmp3k6aPP6QcMOMNQjk
+
+{
+    "name":"Bershka",
+    "CIF":"P12872340",
+    "direction": "c/ serrano 10",
+    "email":"bershka@email.com",
+    "phone":"336772882",
+    "pageID": 8363
+}
+
+### Borrar un comercio a partir de su CIF, lógico
+DELETE http://localhost:3000/api/business/H03872347?logic=true
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzE3YjVlYjc2NmVlNTNhNzE1MmVhYTgiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3Mjk2MTI1NTgsImV4cCI6MTcyOTY5ODk1OH0.Yprt2OkgzTDaJyTWnp1zIErtsmp3k6aPP6QcMOMNQjk
+
+
+### Borrar un commercio por su CIF, fisico
+DELETE http://localhost:3000/api/business/M98498398?logic=false
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzFmZjk5ZjhiZWFiMWUyOGY0MGMxYjUiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzA4MjUwMzUsImV4cCI6MTczMDkxMTQzNX0.6Osav3csXzp2VEvT5hSm1eKn2ELZNu_26gganTikEGY
+
+
+### Llamada para restaurar un borrado lógico
+PUT http://localhost:3000/api/business/restore/H03872347
+Content-Type: application/json
+
+###
+POST http://localhost:3000/api/business/mail HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDSUYiOiJQMTI4MzIzNDAiLCJpYXQiOjE3MzA2Mzk5NTV9.w8cS1NtB14goCvk0Lcrp-Acq77SIx3aVWJbAfUqRQP4
+
+{
+    "subject": "Prueba del correo",
+    "text": "Si lees esto es que funciona.",
+    "to": "alvarodiezz16@gmail.com"
+}
