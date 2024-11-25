@@ -2,7 +2,7 @@
 
 export async function getBizDetails(cif) {
     try {
-        const url = `http://localhost:3000/api/business/${cif}`;
+        const url = `${process.env.API_URL}/business/${cif}`;
         const response = await fetch(url, {
             method: 'GET',
             headers: {

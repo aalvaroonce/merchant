@@ -1,8 +1,9 @@
 'use server';
+import { cookies } from 'next/headers';
 
-export async function handleLogin(body) {
+async function handleLogin(body) {
     try {
-        const response = await fetch('http://localhost:3000/api/users/login', {
+        const response = await fetch(`${process.env.API_URL}/users/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -15,9 +16,38 @@ export async function handleLogin(body) {
         }
 
         const data = await response.json();
+
+        if (!data.data.token) {
+            throw new Error("Token no encontrado en la respuesta");
+        }
+
+        const cookieStore = cookies();
+
+        cookieStore.set({
+            name: 'token',
+            value: data.data.token,
+            path: '/',
+        });
+
+        if (data.data.user) {
+            cookieStore.set({
+                name: 'user',
+                value: JSON.stringify(data.data.user), // Serializa el objeto si es necesario
+                path: '/',
+            });
+        } else if (data.data.biz) {
+            cookieStore.set({
+                name: 'biz',
+                value: JSON.stringify(data.data.biz), // Serializa el objeto si es necesario
+                path: '/',
+            });
+        }
+
         return data;
     } catch (error) {
         console.error("Error during login:", error);
         throw new Error("No se pudo iniciar sesión. Intenta nuevamente.");
     }
 }
+
+export default handleLogin;

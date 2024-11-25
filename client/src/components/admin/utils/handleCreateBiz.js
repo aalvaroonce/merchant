@@ -2,7 +2,7 @@
 
 export async function createBiz(body) {
     try {
-        const response = await fetch('http://localhost:3000/api/business', {
+        const response = await fetch(`${process.env.API_URL}/api/business`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -4,13 +4,12 @@ export default function FormularioSignIn({ sendData }) {
     const { register, handleSubmit, control, formState: { errors } } = useForm({
         defaultValues: {
             name: '',
+            CIF: '',
+            direction: '',
             email: '',
-            password: '',
-            confirmPassword: '',
-            age: 0,
-            city: '',
-            hobbies: [],
-            openToOffers: false,
+            phone: 0,
+            password: "",
+            confirmPassword: "",
         },
     });
 

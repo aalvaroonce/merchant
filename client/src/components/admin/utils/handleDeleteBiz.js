@@ -1,14 +1,13 @@
 'use server';
 
-export async function updateBiz(bizCIF, token, body) {
+export async function deleteUser(bizCIF, token) {
     try {
+        
         const response = await fetch(`${process.env.API_URL}/business/${bizCIF}`, {
-            method: 'PUT',
+            method: 'DELETE',
             headers: {
-                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`,
             },
-            body: JSON.stringify(body),
         });
 
         if (!response.ok) {
@@ -18,7 +17,7 @@ export async function updateBiz(bizCIF, token, body) {
         const data = await response.json();
         return data;
     } catch (error) {
-        console.error("Error updating business:", error);
-        throw new Error("No se pudo actualizar el comercio. Intenta nuevamente.");
+        console.error("Error deleting user:", error);
+        throw new Error("No se pudo borrar el usuario. Intenta nuevamente.");
     }
 }

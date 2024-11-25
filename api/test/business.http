@@ -3,15 +3,15 @@
 # Guardar un comercio
 POST http://localhost:3000/api/business 
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzFmZjk5ZjhiZWFiMWUyOGY0MGMxYjUiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzA4MjUwMzUsImV4cCI6MTczMDkxMTQzNX0.6Osav3csXzp2VEvT5hSm1eKn2ELZNu_26gganTikEGY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzFmZjk5ZjhiZWFiMWUyOGY0MGMxYjUiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzI0ODY4MTMsImV4cCI6MTczMjU3MzIxM30.uby2bzRP-vyx8ySsWdjmQqcZusJurFWkUt4Xz9r9WGA
 
 {
     "name":"Inditex",
-    "CIF":"H03872348",
+    "CIF":"H03822348",
     "direction": "c/ velazquez 37",
-    "email":"inditex@email.com",
-    "phone":"334503455",
-    "pageID": 2334
+    "email":"inditexx@email.com",
+    "phone":"334503155",
+    "password":"Contraseña1234."
 }
 
 ### Guardar un comercio
@@ -25,8 +25,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzFmZjk5Z
     "CIF":"M98498398",
     "direction":"c/ serrano 10",
     "email":"primark@email.com",
-    "phone":"336772882",
-    "pageID": 8363
+    "phone":"336772882"
 }
 ###
 POST http://localhost:3000/api/business 
@@ -38,8 +37,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzFmZjk5Z
     "CIF":"L98302673",
     "direction":"c/ serrano 10",
     "email":"leroi@email.com",
-    "phone":"336722882",
-    "pageID": 8732
+    "phone":"336722882"
 }
 ###
 POST http://localhost:3000/api/business 
@@ -51,8 +49,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzFmZjk5Z
     "CIF":"P12832340",
     "direction":"c/ serrano 10",
     "email":"primark@email.com",
-    "phone":"336772882",
-    "pageID": 8363
+    "phone":"336772882"
 }
 
 ### Obtener la lista de comercios
@@ -79,17 +76,16 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzE3YjVlY
 
 
 ### Modificar un comercio a partir de su CIF
-PUT http://localhost:3000/api/business/P12872340
+PUT http://localhost:3000/api/business/H03822348
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzE3YjVlYjc2NmVlNTNhNzE1MmVhYTgiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3Mjk2MTI1NTgsImV4cCI6MTcyOTY5ODk1OH0.Yprt2OkgzTDaJyTWnp1zIErtsmp3k6aPP6QcMOMNQjk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDSUYiOiJIMDM4MjIzNDgiLCJyb2xlIjoiYml6IiwiaWF0IjoxNzMyMjA1NjEyfQ.fG0r7x1Lixsb-i6sAdMTVli5gOeis-auTuDmQ9bNI1s
 
 {
-    "name":"Bershka",
-    "CIF":"P12872340",
-    "direction": "c/ serrano 10",
-    "email":"bershka@email.com",
-    "phone":"336772882",
-    "pageID": 8363
+    "name":"Inditox",
+    "CIF":"H03822348",
+    "direction": "c/ velazquez 37",
+    "email":"inditexx@email.com",
+    "phone":"334503155"
 }
 
 ### Borrar un comercio a partir de su CIF, lógico
@@ -98,8 +94,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzE3YjVlY
 
 
 ### Borrar un commercio por su CIF, fisico
-DELETE http://localhost:3000/api/business/M98498398?logic=false
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzFmZjk5ZjhiZWFiMWUyOGY0MGMxYjUiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzA4MjUwMzUsImV4cCI6MTczMDkxMTQzNX0.6Osav3csXzp2VEvT5hSm1eKn2ELZNu_26gganTikEGY
+DELETE http://localhost:3000/api/business/H03822348?logic=false
+Authorization: Bearer  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzFmZjk5ZjhiZWFiMWUyOGY0MGMxYjUiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzI0ODY4MTMsImV4cCI6MTczMjU3MzIxM30.uby2bzRP-vyx8ySsWdjmQqcZusJurFWkUt4Xz9r9WGA
 
 
 ### Llamada para restaurar un borrado lógico
@@ -109,7 +105,7 @@ Content-Type: application/json
 ###
 POST http://localhost:3000/api/business/mail HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDSUYiOiJQMTI4MzIzNDAiLCJpYXQiOjE3MzA2Mzk5NTV9.w8cS1NtB14goCvk0Lcrp-Acq77SIx3aVWJbAfUqRQP4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDSUYiOiJIMDM4MjIzNDgiLCJyb2xlIjoiYml6IiwiaWF0IjoxNzMyNDg2ODY0fQ.bcWPnmSUt5z34XXed-a4zk2YN66DrrwprJjs2ga_mtU
 
 {
     "subject": "Prueba del correo",

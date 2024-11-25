@@ -25,8 +25,12 @@ const businessScheme = new mongoose.Schema(
             type: String,
             unique: true,
         },
-        pageID:{
-            type: Number,
+        password:{
+            type: String
+        },
+        role:{
+            type: String,
+            default: "biz"
         }
     },
         {

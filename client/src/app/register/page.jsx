@@ -1,22 +1,23 @@
 'use client';
 
 import { useState } from 'react';
-import FormularioCreateBiz from '../formularios/FormularioBiz';
-import Mensaje from '../Mensaje';
-import createBiz from './utils/handleCreateBiz'; 
+import { useRouter } from 'next/navigation';
+import FormularioSignIn from '@/components/formularios/FormularioSignIn';
+import Mensaje from '@/components/Mensaje';
+import handleSignIn from '@/components/users/utils/handleSignIn'; 
 
-function CreateBiz() {
+function SignIn() {
     const [mensaje, setMensaje] = useState(null);
 
     const handleSendData = async (data) => {
         setMensaje(null); 
 
         try {
-            const result = await createBiz(data); 
+            const result = await handleSignIn(data); 
 
-            if (result.data?.token && result.data?.biz?.cif) {
-                localStorage.setItem('token', result.data.token);
-                localStorage.setItem('bizCIF', result.data.biz.CIF);
+            if (result.data?.token && result.data?.user?._id) {
+                const router = useRouter();
+                router.push('/user');
                 setMensaje({ text: result.message, type: "exito" });
             } else if (result.errors && Array.isArray(result.errors)) {
                 const errorMessages = result.errors.map((error) => error.msg).join(", ");
@@ -31,10 +32,10 @@ function CreateBiz() {
 
     return (
         <>
-            <FormularioCreateBiz sendData={handleSendData} />
+            <FormularioSignIn sendData={handleSendData} />
             {mensaje && <Mensaje mensaje={mensaje} />}
         </>
     );
 }
 
-export default CreateBiz;
+export default SignIn;

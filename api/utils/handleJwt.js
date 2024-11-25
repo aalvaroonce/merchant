@@ -24,6 +24,7 @@ const bizTokenSign = (biz) => {
 
         {
             CIF: biz.CIF,
+            role: biz.role
         },
             JWT_SECRET,
     )

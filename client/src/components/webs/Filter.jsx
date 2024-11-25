@@ -1,99 +1,119 @@
-'use client'
-import { useState } from 'react';
+'use client';
 
-function Filter ({ onFilterChange }) {
-    const [activity, setActivity] = useState("");
-    const [city, setCity] = useState("");
-    const [sortByScoring, setSortByScoring] = useState(false);
-    const [upwards, setUpwards] = useState("true");
+import { useForm, Controller } from "react-hook-form";
 
-    function capitalize(str) {
-        if (typeof str !== 'string' || str.length === 0) {
-            return '';
+function Filter({ onFilterChange }) {
+    const { control, handleSubmit, watch, setValue } = useForm({
+        defaultValues: {
+            city: "",
+            activity: "",
+            sortByScoring: false,
+            upwards: "true",
+        },
+    });
+
+    // Observa cambios en sortByScoring para manejar condicionales
+    const sortByScoring = watch("sortByScoring");
+
+    const capitalize = (str) => {
+        if (typeof str !== "string" || str.length === 0) {
+            return "";
         }
         return str.trim().charAt(0).toUpperCase() + str.trim().slice(1).toLowerCase();
-    }
+    };
 
-    const handleCityChange= (event)=> {
-        setCity(
-            (event.target.value));
-    }
-
-    const handleActivityChange= (event)=> {
-        setActivity(capitalize(event.target.value));
-    }
-
-    const toggleSortByScoring = () => {
-        setSortByScoring(!sortByScoring);
-    }
-
-    const handleOrderChange= (event)=> {
-        setUpwards(event.target.value);
-    }
-
-    const handleClick = () => {
-        const filterData = {
-            city,
-            activity,
-            sortByScoring,
-            upwards
-        };
-        onFilterChange(filterData);
+    const onSubmit = (data) => {
+        const capitalizedActivity = capitalize(data.activity);
+        onFilterChange({ ...data, activity: capitalizedActivity });
     };
 
     return (
         <div className="filter-container">
-            <label className="filter-label">Ciudad</label>
-            <input
-                className="filter-input"
-                type="text"
-                value={city}
-                onChange={handleCityChange}
-                placeholder="Ingrese la ciudad"
-            />
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <label className="filter-label">Ciudad</label>
+                <Controller
+                    name="city"
+                    control={control}
+                    render={({ field }) => (
+                        <input
+                            {...field}
+                            className="filter-input"
+                            placeholder="Ingrese la ciudad"
+                        />
+                    )}
+                />
 
-            <label className="filter-label">Actividad</label>
-            <input
-                className="filter-input"
-                type="text"
-                value={activity}
-                onChange={handleActivityChange}
-                placeholder="Ingrese la actividad"
-            />
+                <label className="filter-label">Actividad</label>
+                <Controller
+                    name="activity"
+                    control={control}
+                    render={({ field }) => (
+                        <input
+                            {...field}
+                            className="filter-input"
+                            placeholder="Ingrese la actividad"
+                        />
+                    )}
+                />
 
-            <label className="filter-label">Ordenar por Scoring</label>
-            <button className="filter-button" onClick={toggleSortByScoring}>
-                {sortByScoring ? "Desactivar" : "Activar"} Ordenación
-            </button>
+                <label className="filter-label">Ordenar por Scoring</label>
+                <Controller
+                    name="sortByScoring"
+                    control={control}
+                    render={({ field }) => (
+                        <button
+                            type="button"
+                            className="filter-button"
+                            onClick={() => setValue("sortByScoring", !field.value)}
+                        >
+                            {field.value ? "Desactivar" : "Activar"} Ordenación
+                        </button>
+                    )}
+                />
 
-            {sortByScoring && (
-                <>
+                {sortByScoring && (
                     <div className="direction-options">
                         <label className="direction-option">
-                            <input
-                                type="checkbox"
-                                value="true"
-                                checked={upwards === "true"}
-                                onChange={handleOrderChange}
+                            <Controller
+                                name="upwards"
+                                control={control}
+                                render={({ field }) => (
+                                    <input
+                                        {...field}
+                                        type="radio"
+                                        value="true"
+                                        checked={field.value === "true"}
+                                        onChange={(e) => field.onChange(e.target.value)}
+                                    />
+                                )}
                             />
                             Ascendente
                         </label>
                         <label className="direction-option">
-                            <input
-                                type="checkbox"
-                                value="false"
-                                checked={upwards === "false"}
-                                onChange={handleOrderChange}
+                            <Controller
+                                name="upwards"
+                                control={control}
+                                render={({ field }) => (
+                                    <input
+                                        {...field}
+                                        type="radio"
+                                        value="false"
+                                        checked={field.value === "false"}
+                                        onChange={(e) => field.onChange(e.target.value)}
+                                    />
+                                )}
                             />
                             Descendente
                         </label>
                     </div>
-                </>
-            )}
+                )}
 
-            <button className="filter-button" onClick={handleClick}>Aplicar Filtros</button>
+                <button type="submit" className="filter-button">
+                    Aplicar Filtros
+                </button>
+            </form>
         </div>
     );
-};
+}
 
 export default Filter;

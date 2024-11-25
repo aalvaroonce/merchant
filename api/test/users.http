@@ -73,7 +73,7 @@ Content-Type: application/json
 ### Obtener todos los users
 GET http://localhost:3000/api/users
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzFmZjk5ZjhiZWFiMWUyOGY0MGMxYjUiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzAzMDk0MzUsImV4cCI6MTczMDM5NTgzNX0.Hy2Kaxpz9G0LAdk2E8rSIJuYelrVpLKxjZhVAZsbotI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzFmZjk5ZjhiZWFiMWUyOGY0MGMxYjUiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzIyMDU3MDgsImV4cCI6MTczMjI5MjEwOH0.KXUtc6DJWu6WZl_rDvEW3RHzFwB7hy3sltn2rJuTQjw
 
 ### Obtener una página users por su ID
 GET http://localhost:3000/api/users/6717c999d065ac2a9d4f0b94
@@ -82,12 +82,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzE3YjVlY
 
 ### Deja porque es el token de Menganito y no intenta cambiar el rol
 
-PUT http://localhost:3000/api/users/6727ef7ec0bcb3945d0adbb9 HTTP/1.1
+PUT http://localhost:3000/api/users/673cb1c25c3fdb2aaf951ba4 HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzI3ZWY3ZWMwYmNiMzk0NWQwYWRiYjkiLCJyb2xlIjoidXNlciIsImlhdCI6MTczMjAyODQ0NywiZXhwIjoxNzMyMTE0ODQ3fQ.gMy9DzlUMyZbPJEPrqfvG9qMFKwZNaOiXwfENC5waqI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzFmZjk5ZjhiZWFiMWUyOGY0MGMxYjUiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzIyMDU3MDgsImV4cCI6MTczMjI5MjEwOH0.KXUtc6DJWu6WZl_rDvEW3RHzFwB7hy3sltn2rJuTQjw
 
 {
-    "name": "Me",
+    "name": "Menganito",
     "email": "menganitohernandez@test.com",
     "age": 64,
     "city": "Madrid",

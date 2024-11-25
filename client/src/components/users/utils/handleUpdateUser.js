@@ -1,8 +1,16 @@
 'use server';
+import { cookies } from 'next/headers';
 
-export async function updateUser(userId, token, body) {
+async function updateUser(body) {
     try {
-        const response = await fetch(`http://localhost:3000/api/users/${userId}`, {
+
+        const cookiesStore= cookies();
+        const tokenInfo = cookiesStore.get('token')
+        const token= tokenInfo.value
+        const user = JSON.parse(cookiesStore.get('user').value)
+        const userId= user._id
+
+        const response = await fetch(`${process.env.API_URL}/users/${userId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
@@ -22,3 +30,5 @@ export async function updateUser(userId, token, body) {
         throw new Error("No se pudo actualizar el usuario. Intenta nuevamente.");
     }
 }
+
+export default updateUser

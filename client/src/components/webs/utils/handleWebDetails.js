@@ -1,8 +1,8 @@
 'use server';
 
-export async function getWebDetails(cif) {
+async function getWebDetails(cif) {
     try {
-        const url = `http://localhost:3000/api/web/${cif}`;
+        const url = `${process.env.API_URL}/web/${cif}`;
         const response = await fetch(url, {
             method: 'GET',
             headers: {
@@ -21,3 +21,5 @@ export async function getWebDetails(cif) {
         throw new Error("Failed to fetch web details.");
     }
 }
+
+export default getWebDetails

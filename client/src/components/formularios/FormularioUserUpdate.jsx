@@ -1,23 +1,19 @@
 import { useForm, useFieldArray } from "react-hook-form";
+import { useEffect, useState } from "react";
+import getUser from "./utils/handleGetUser";
 
-const getUserDataFromLocalStorage = () => {
-    const userData = localStorage.getItem('user');
-    try {
-        const parsedData = JSON.parse(userData) || {};
-        const { role, ...filteredData } = parsedData;
-        return {
-            ...filteredData,
-            hobbies: filteredData.hobbies || [],
-        };
-    } catch (error) {
-        console.warn("Error al parsear los datos del localStorage:", error);
-        return { hobbies: [] };
-    }
-};
+export default function FormularioUpdateUser({ sendData }) {
+    const [loading, setLoading] = useState(true);
 
-export default function FormularioPut({ sendData }) {
-    const { register, handleSubmit, control, formState: { errors } } = useForm({
-        defaultValues: getUserDataFromLocalStorage(),
+    const { register, handleSubmit, control, reset, formState: { errors } } = useForm({
+        defaultValues: {
+            name: "",
+            email: "",
+            age: "",
+            city: "",
+            hobbies: [],
+            openToOffers: false,
+        },
     });
 
     const { fields, append, remove } = useFieldArray({
@@ -25,18 +21,42 @@ export default function FormularioPut({ sendData }) {
         name: "hobbies",
     });
 
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const userData = await getUser();
+                const { role, ...filteredData } = JSON.parse(userData);
+                reset({
+                    ...filteredData,
+                    hobbies: filteredData.hobbies || [],
+                });
+            } catch (error) {
+                console.warn("Error al obtener los datos del usuario:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchUserData();
+    }, [reset]);
+
     const onSubmit = (data) => {
         sendData(data);
     };
+
+    if (loading) {
+        return <p>Cargando datos del usuario...</p>;
+    }
 
     return (
         <div className="formulario-container">
             <h3>Editar Usuario</h3>
             <form onSubmit={handleSubmit(onSubmit)}>
+                {/* Campos del formulario */}
                 <div>
                     <label>Nombre</label>
                     <input
-                        {...register('name', {
+                        {...register("name", {
                             required: "El nombre es requerido",
                             minLength: {
                                 value: 3,
@@ -54,7 +74,8 @@ export default function FormularioPut({ sendData }) {
                 <div>
                     <label>Email</label>
                     <input
-                        {...register('email', {
+                        type="email"
+                        {...register("email", {
                             required: "El correo electrónico es requerido",
                             pattern: {
                                 value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
@@ -69,7 +90,7 @@ export default function FormularioPut({ sendData }) {
                     <label>Edad</label>
                     <input
                         type="number"
-                        {...register('age', {
+                        {...register("age", {
                             required: "La edad es requerida",
                             min: {
                                 value: 0,
@@ -77,8 +98,8 @@ export default function FormularioPut({ sendData }) {
                             },
                             max: {
                                 value: 120,
-                                message: "Introduzca una edad real"
-                            }
+                                message: "Introduzca una edad real",
+                            },
                         })}
                     />
                     {errors.age && <p>{errors.age.message}</p>}
@@ -87,7 +108,7 @@ export default function FormularioPut({ sendData }) {
                 <div>
                     <label>Ciudad</label>
                     <input
-                        {...register('city', {
+                        {...register("city", {
                             required: "La ciudad es requerida",
                             minLength: {
                                 value: 2,
@@ -114,14 +135,13 @@ export default function FormularioPut({ sendData }) {
                     <button type="button" onClick={() => append("")}>
                         Añadir hobby
                     </button>
-                    {errors.hobbies && <p>{errors.hobbies.message}</p>}
                 </div>
 
                 <div>
                     <label>¿Desea recibir notificaciones de posibles comercios?</label>
                     <input
                         type="checkbox"
-                        {...register('openToOffers')}
+                        {...register("openToOffers")}
                     />
                 </div>
 

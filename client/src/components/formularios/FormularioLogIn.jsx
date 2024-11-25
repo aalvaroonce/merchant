@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 
-export default function FormularioLogIn({ sendData }) {
+function FormularioLogIn({ sendData }) {
     const { register, formState: { errors }, handleSubmit } = useForm();
 
     const onSubmit = (data) => {
@@ -34,6 +34,10 @@ export default function FormularioLogIn({ sendData }) {
                             minLength: { 
                                 value: 6, 
                                 message: "La contraseña debe tener al menos 6 caracteres"
+                            },
+                            pattern: {
+                                value: /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*(),.?":{}|<>]).*$/,
+                                message: "La contraseña debe tener mínimo una mayúscula, una minúscula, un numero y un carácter especial"
                             }
                         })} 
                     />
@@ -45,3 +49,6 @@ export default function FormularioLogIn({ sendData }) {
         </div>
     );
 }
+
+
+export default FormularioLogIn

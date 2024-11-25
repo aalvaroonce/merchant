@@ -1,6 +1,6 @@
 module.exports= {
     type: "object",
-    required: ["name", "CIF", "direction", "email", "phone", "pageID"],
+    required: ["name", "CIF", "direction", "email", "phone"],
     properties:{
         name: {
             type: "string",
@@ -8,23 +8,27 @@ module.exports= {
         },
         CIF: {
             type: "string",
-            example: "H03872347", // Ejemplo de CIF
+            example: "H03872347",
         },
         direction: {
             type: "string",
-            example: "Calle Mayor, 25, Madrid", // Ejemplo de dirección
+            example: "Calle Mayor, 25, Madrid", 
         },
         email: {
             type: "string",
-            example: "pedro.gonzalez@correo.com", // Ejemplo de correo electrónico
+            example: "pedro.gonzalez@correo.com", 
         },
         phone: {
             type: "string",
-            example: "912345678", // Ejemplo de número de teléfono
+            example: "912345678",
         },
-        pageID: {
-            type: "number",
-            example: 123, // Ejemplo de ID de página
-          },
+        password:{
+            type: "string",
+            example: "Contraseña123.",
+        },
+        role:{
+            type: String,
+            example: "biz"
+        }
     },
 }

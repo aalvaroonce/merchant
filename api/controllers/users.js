@@ -35,7 +35,6 @@ const getUsers = async (req, res) => {
 }
 
 const getUser= async (req, res) => {
-
     const {id} = matchedData(req); // Obtener el id del parámetro de la URL
     
     try {
@@ -59,8 +58,9 @@ const getUser= async (req, res) => {
 }
 
 const registerCtrl = async (req, res) =>{
+    req = matchedData(req)
+
     try{
-        req = matchedData(req)
         const password = await encrypt(req.password)
         const body = {...req, password} // Con "..." duplicamos el objeto y le añadimos o sobreescribimos una propiedad
         const dataUser = await usersModel.create(body)
@@ -81,37 +81,46 @@ const registerCtrl = async (req, res) =>{
 }
 
 const loginCtrl = async (req, res) => {
+    req = matchedData(req);
 
     try {
-        
-        req = matchedData(req)
-        const user = await usersModel.findOne({ email: req.email }).select()
-        
-        if(!user){
-            res.status(404).send({ message: "Usuario no existente" })
-            return
+        // Intentar encontrar un usuario por email en usersModel
+        let user = await usersModel.findOne({ email: req.email });
+
+        // Si no encuentra un usuario, buscar en businessModel
+        if (!user) {
+            user = await businessModel.findOne({ email: req.email });
+            if (!user) {
+                return res.status(404).send({ message: "Usuario no existente" });
+            }
         }
-    
+
+        // Validar contraseña
         const hashPassword = user.password;
-        const check = await compare(req.password, hashPassword)
-        
-        if(!check){
-            res.status(401).send({ message: "Contraseña incorrecta" })
-            return
+        const check = await compare(req.password, hashPassword);
+        if (!check) {
+            return res.status(401).send({ message: "Contraseña incorrecta" });
         }
-        
-        user.set("password", undefined, {strict:false}) //Si no queremos que se muestre el hash en la respuesta
-    
+
+        // Quitar la contraseña del objeto para la respuesta
+        user.set("password", undefined, { strict: false });
+
+        // Preparar los datos para la respuesta
         const data = {
-            token: await userTokenSign (user),
-            user: user
-        }
-        res.status(200).send({ message: "Logeado correctamente", data: data })
+            token: await userTokenSign(user),
+            user: user,
+        };
+
+        return res.status(200).send({ message: "Logeado correctamente", data });
+    } catch (err) {
+        console.error("Error en login:", err);
+        return res.status(500).send({
+            message: "Error al procesar la solicitud de inicio de sesión",
+            error: err.message,
+        });
     }
-    catch(err){ 
-        res.status(500).send({ message: "Error al registrar el usuario", error: err.message })
-    }
-}
+};
+
 
 const updateUser = async (req, res) => {
     const { id, ...body } = matchedData(req); // Obtener los datos del cuerpo de la solicitud y el id de la URL
@@ -125,6 +134,8 @@ const updateUser = async (req, res) => {
         if (!updatedUser) {
             return res.status(404).send({ message: `User con id: ${id} no encontrado` });
         }
+
+        updatedUser.set("password", undefined, { strict: false });
         
         // Enviar el user actualizada 
         res.status(200).send({ message: "User actualizado", data: updatedUser });

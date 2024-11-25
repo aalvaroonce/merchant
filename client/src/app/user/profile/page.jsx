@@ -1,9 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import FormularioUpdateUser from '../formularios/FormularioUserUpdate.jsx';
-import Mensaje from '../Mensaje.jsx';
-import updateUser from './utils/handleUpdateUser.js';
+import FormularioUpdateUser from '@/components/formularios/FormularioUserUpdate.jsx';
+import Mensaje from '@/components/Mensaje.jsx';
+import updateUser from '@/components/users/utils/handleUpdateUser.js';
+import DeleteUser from '@/components/users/DeleteUser';
 
 export default function UpdateUser() {
     const [mensaje, setMensaje] = useState(null);
@@ -25,6 +26,7 @@ export default function UpdateUser() {
     return (
         <>
             <FormularioUpdateUser sendData={handleSendData} />
+            <DeleteUser/>
             {loading ? <p>Cargando...</p> : <Mensaje mensaje={mensaje} />}
         </>
     );

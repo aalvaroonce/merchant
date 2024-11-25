@@ -42,10 +42,15 @@ const validatorCreateBiz = [
         .notEmpty().withMessage("El número de teléfono no puede estar vacío")
         .isMobilePhone().withMessage("Debe ser un número de móvil válido"),
     
-    check("pageID")
-        .exists().withMessage("El ID de la página es obligatorio")
-        .notEmpty().withMessage("El ID de la página no puede estar vacío")
-        .isInt().withMessage("El ID de la página debe ser un número entero"),
+    check("password")
+        .exists().withMessage("La contraseña es requerida")
+        .notEmpty().withMessage("El campo contraseña no puede estar vacío")
+        .isLength({ min: 8, max: 64 }).withMessage("La contraseña debe tener entre 8 y 64 caracteres")
+        .matches(/[A-Z]/).withMessage("La contraseña debe contener al menos una letra mayúscula")
+        .matches(/[a-z]/).withMessage("La contraseña debe contener al menos una letra minúscula")
+        .matches(/[0-9]/).withMessage("La contraseña debe contener al menos un número")
+        .matches(/[!@#$%^&*(),.?":{}|<>]/).withMessage("La contraseña debe contener al menos un carácter especial"),
+
     
     (req, res, next) => validateResults(req, res, next)
 ];
@@ -85,12 +90,6 @@ const validatorUpdateBiz = [
         .exists().withMessage("El número de teléfono es obligatorio")
         .notEmpty().withMessage("El número de teléfono no puede estar vacío")
         .isMobilePhone().withMessage("Debe ser un número de móvil válido"),
-    
-
-    check("pageID")
-        .exists().withMessage("El ID de la página es obligatorio")
-        .notEmpty().withMessage("El ID de la página no puede estar vacío")
-        .isInt().withMessage("El ID de la página debe ser un número entero"),
 
     (req, res, next) => {
         return validateResults(req, res, next);

@@ -223,7 +223,7 @@ describe('business', () => {
                 "direction": "c/ santillana 37",
                 "email":"berskha@email.com",
                 "phone":"094298423",
-                "pageID": 2480
+                "password": "Contraseña1234."
             })
             .set('Accept', 'application/json')
 
@@ -233,9 +233,8 @@ describe('business', () => {
         expect(response.body.data.biz.name).toEqual('berskha');
         expect(response.body.data.biz.CIF).toEqual('H03802347');
         expect(response.body.data.biz.direction).toEqual('c/ santillana 37');
-        expect(response.body.data.biz.email).toEqual('berskha@email.com'); // Edad como número
-        expect(response.body.data.biz.phone).toEqual('094298423'); // Verificación de ciudad
-        expect(response.body.data.biz.pageID).toBe(2480); // Validación de hobbies
+        expect(response.body.data.biz.email).toEqual('berskha@email.com'); 
+        expect(response.body.data.biz.phone).toEqual('094298423'); 
     
         // Comprobamos que el token y el id existan y no estén vacíos
         expect(response.body.data.token).toBeDefined();
@@ -280,23 +279,21 @@ describe('business', () => {
             .put('/api/business/'+cif)
             .auth(tokenBiz, { type: 'bearer' })
             .send({
-                "name":"primark",
+                "name":"zara",
                 "direction": "c/ santillana 37",
-                "email":"primark@email.com",
-                "phone":"094298423",
-                "pageID": 2480
+                "email":"zara@email.com",
+                "phone":"194298423"
             })
             .set('Accept', 'application/json')
 
-        console.log(response.body)
         // Verificaciones de los datos devueltos en el cuerpo de la respuesta
         expect(response.statusCode).toBe(200);
-        expect(response.body.data.name).toEqual('primark');
+        expect(response.body.data.name).toEqual('zara');
         expect(response.body.data.CIF).toEqual('H03802347');
         expect(response.body.data.direction).toEqual('c/ santillana 37');
-        expect(response.body.data.email).toEqual('primark@email.com'); // Edad como número
-        expect(response.body.data.phone).toEqual('094298423'); // Verificación de ciudad
-        expect(response.body.data.pageID).toBe(2480); // Validación de hobbies
+        expect(response.body.data.email).toEqual('zara@email.com'); 
+        expect(response.body.data.phone).toEqual('194298423'); 
+
     
     });
 
@@ -372,7 +369,7 @@ describe('web', () => {
                 "direction": "c/ santillana 37",
                 "email":"berskha@email.com",
                 "phone":"094298423",
-                "pageID": 2480
+                "password": "Contraseña1234."
             })
             .set('Accept', 'application/json')
 
@@ -382,9 +379,9 @@ describe('web', () => {
         expect(response.body.data.biz.name).toEqual('berskha');
         expect(response.body.data.biz.CIF).toEqual('H03802347');
         expect(response.body.data.biz.direction).toEqual('c/ santillana 37');
-        expect(response.body.data.biz.email).toEqual('berskha@email.com'); // Edad como número
-        expect(response.body.data.biz.phone).toEqual('094298423'); // Verificación de ciudad
-        expect(response.body.data.biz.pageID).toBe(2480); // Validación de hobbies
+        expect(response.body.data.biz.email).toEqual('berskha@email.com'); 
+        expect(response.body.data.biz.phone).toEqual('094298423'); 
+       
     
         // Comprobamos que el token y el id existan y no estén vacíos
         expect(response.body.data.token).toBeDefined();
@@ -489,7 +486,7 @@ describe('web', () => {
     
         expect(response.statusCode).toBe(200);
         expect(response.body.data).toHaveProperty("imageArray");
-        expect(response.body.data.imageArray.pop().split('/').pop()).toEqual("restaurante2.jpg");
+        expect(response.body.data.imageArray.pop().split('/').pop()).toEqual("image-restaurante2.jpg");
     });
 
     it('should add a text to a web', async () => {
@@ -569,7 +566,7 @@ describe('GET /api/web/search/:city/:activity', () => {
         { city: 'Madrid', activity: 'Café', sortByScoring: 'true', upwards: 'false' },
         { city: 'Barcelona', activity: 'Restaurante', sortByScoring: 'true', upwards: 'true' },
         { city: 'Barcelona', activity: 'Café', sortByScoring: 'false', upwards: 'false' },
-        { city: '', activity: '', sortByScoring: 'true', upwards: 'true' }, // Sin ciudad ni actividad
+        { city: 'empty', activity: 'empty', sortByScoring: 'true', upwards: 'true' }, // Sin ciudad ni actividad
     ];
 
     testCases.forEach(({ city, activity, sortByScoring, upwards }) => {
@@ -577,7 +574,6 @@ describe('GET /api/web/search/:city/:activity', () => {
             const response = await request(app)
                 .get(`/api/web/search/${city}/${activity}`)
                 .query({ sortByScoring, upwards });
-            console.log(response.body)
             expect(response.status).toBe(200);
             expect(response.body).toHaveProperty('message');
             expect(response.body).toHaveProperty('webs');

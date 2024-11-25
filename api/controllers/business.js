@@ -2,7 +2,8 @@
 const { matchedData } = require('express-validator');
 const {businessModel, usersModel, webModel} = require('../models')
 const { bizTokenSign } = require("../utils/handleJwt")
-const {sendEmail} = require('../utils/handleMails')
+const {sendEmail} = require('../utils/handleMails');
+const { encrypt } = require('../utils/handlePassword');
 
 // Devolvemos todas empresas
 const getBizs = async (req, res) => {
@@ -89,7 +90,7 @@ const createBiz = async (req, res) => {
     const { ...body } = matchedData(req); // Obtener los datos del cuerpo de la solicitud
 
     try {
-
+      
         // Buscar empresa por CIF
         const existingBiz = await businessModel.findOne({CIF: body.CIF})
 
@@ -97,14 +98,18 @@ const createBiz = async (req, res) => {
         if (existingBiz) {
             return res.status(404).send({ message: `Empresa con CIF ${body.CIF} ya existente` });
         }
+        
+        const password= await encrypt(body.password)
+        const bodyData = {...body, password}
 
         // Crear nueva empresa con los datos
-        const biz= await businessModel.create(body);
+        const dataBiz= await businessModel.create(bodyData);
 
+        dataBiz.set('password', undefined, { strict: false })
 
         const data = {
-            token: await bizTokenSign(biz),
-            biz: biz
+            token: await bizTokenSign(dataBiz),
+            biz: dataBiz
         }
 
         // Enviar la lista de empresas con la nueva emprsesa incluida
@@ -144,6 +149,8 @@ const updateBiz = async (req, res) => {
         if (!updatedBiz) {
             return res.status(404).send({ message: `Empresa con CIF: ${cif} no encontrada` });
         }
+
+        updatedBiz.set('password', undefined, { strict: false })
         
         // Enviar la empresa actualizada 
         res.status(200).send({ message: "Empresa actualizada", data: updatedBiz });

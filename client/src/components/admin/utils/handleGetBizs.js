@@ -2,7 +2,7 @@
 
 export async function getBizs(filters) {
     try {
-        let url = `http://localhost:3000/api/business?upwards=${filters.upwards}`;
+        let url = `${process.env.API_URL}/business?upwards=${filters.upwards}`;
 
         const response = await fetch(url, {
             method: 'GET',

@@ -1,8 +1,9 @@
 'use server';
 
-export async function getWebs(filters) {
+async function getWebs(filters) {
     try {
-        let url = `http://localhost:3000/api/web`;
+
+        let url = `${process.env.API_URL}/web`;
         if (filters.city || filters.activity || filters.sortByScoring) {
             url += `/search/${filters.city || "empty"}/${filters.activity || "empty"}`;
             if (filters.sortByScoring) {
@@ -18,6 +19,7 @@ export async function getWebs(filters) {
         });
 
         if (!response.ok) {
+            console.log(response)
             throw new Error(`Error: ${response.status}`);
         }
 
@@ -28,3 +30,5 @@ export async function getWebs(filters) {
         throw new Error("Error al obtener los datos de las webs.");
     }
 }
+
+export default getWebs

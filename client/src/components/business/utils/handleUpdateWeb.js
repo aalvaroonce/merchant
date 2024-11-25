@@ -1,8 +1,8 @@
 'use server';
 
-export async function updateBiz(bizCIF, token, body) {
+export async function updateWeb(bizCIF, token, body) {
     try {
-        const response = await fetch(`${process.env.API_URL}/business/${bizCIF}`, {
+        const response = await fetch(`${process.env.API_URL}/web/${bizCIF}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

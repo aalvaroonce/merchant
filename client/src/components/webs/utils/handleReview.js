@@ -1,8 +1,12 @@
 'use server';
 
-export async function addReview(businessCIF, reviewData, token) {
+async function addReview(businessCIF, reviewData) {
     try {
-        const response = await fetch(`http://localhost:3000/api/web/addreview/${businessCIF}`, {
+
+        const cookiesStore= cookies();
+        const token = cookiesStore.get(token)
+
+        const response = await fetch(`${process.env.API_URL}/web/addreview/${businessCIF}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -22,3 +26,5 @@ export async function addReview(businessCIF, reviewData, token) {
         throw new Error(error.message || 'Error al enviar la reseña');
     }
 }
+
+export default addReview
