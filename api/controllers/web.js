@@ -2,7 +2,7 @@
 const {webModel} = require('../models');
 const { matchedData } = require('express-validator');
 const {deleteImages}= require('../utils/handleStorage')
-const {uploadToPinata}= require('../utils/handleUploadIPFS')
+const {uploadToPinata, deleteFromPinata}= require('../utils/handleUploadIPFS')
 
 // Devolvemos todas las webs
 const getWebs = async (req, res) => {
@@ -357,8 +357,21 @@ const deleteWeb = async (req, res) => {
             if (!webToDelete){
                 return res.status(404).send({ message: "Web no encontrada para eliminar" });
             }
-            //Borramos las imágenes del almacenamiento interno
-            deleteImages(webToDelete.imageArray)
+            //Borramos las imágenes del almacenamiento interno (ya no utilizado)
+            // deleteImages(webToDelete.imageArray)
+
+            // Borramos las imagenes de pinata 
+            // Extraer CIDs de las URLs en imageArray
+            const imageArray = webToDelete.imageArray || [];
+            const cids = imageArray.map((url) => {
+                const parts = url.split("/ipfs/");
+                return parts.length > 1 ? parts[1] : null; // Obtener CID después de `/ipfs/`
+            }).filter(Boolean); // Eliminar valores nulos o inválidos
+
+            // Eliminar cada imagen de Pinata
+            for (const cid of cids) {
+                await deleteFromPinata(cid);
+            }
 
             // Borrado físico de la base de datos
             const deletedWeb = await webModel.findOneAndDelete({ businessCIF: cif });

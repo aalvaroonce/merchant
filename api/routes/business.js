@@ -105,8 +105,48 @@ router.get("/:cif", authMiddleware, checkRol(["admin"]), validatorGetBiz, getBiz
  */
 router.post("/", authMiddleware, checkRol(["admin"]), validatorCreateBiz, createBiz)
 
+/**
+ * @openapi
+ * /api/business/mail:
+ *  post:
+ *      tags:
+ *      - Business
+ *      summary: Send an email
+ *      description: Sends an email with the provided subject, text, and recipient address.
+ *      requestBody:
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          subject:
+ *                              type: string
+ *                              description: The subject of the email.
+ *                              example: Prueba del correo
+ *                          text:
+ *                              type: string
+ *                              description: The content of the email.
+ *                              example: Si lees esto es que funciona.
+ *                          to:
+ *                              type: string
+ *                              description: The recipient email address.
+ *                              example: correodejuan@test.com
+ *                      required:
+ *                          - subject
+ *                          - text
+ *                          - to
+ *      responses:
+ *          '200':
+ *              description: Email sent successfully
+ *          '400':
+ *              description: Validation error
+ *          '500':
+ *              description: Server error
+ *      security:
+ *          - bearerAuth: []
+ */
+router.post("/mail", bizMiddleware, validatorMail, sendMail);
 
-router.post("/mail", bizMiddleware, validatorMail, sendMail)
 /**
  * @openapi
  * /api/business/{cif}:

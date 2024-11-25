@@ -40,4 +40,29 @@ const uploadToPinata = async (fileBuffer, fileName, cif) => {
     }
  };
 
-module.exports = {uploadToPinata}
+ // Función para eliminar una imagen de Pinata
+ const deleteFromPinata = async (cid) => {
+    const url = `https://api.pinata.cloud/pinning/unpin/${cid}`;
+    const PINATA_KEY = process.env.PINATA_KEY;
+    const PINATA_SECRET = process.env.PINATA_SECRET;
+
+    try {
+        const response = await fetch(url, {
+            method: 'DELETE',
+            headers: {
+                'pinata_api_key': PINATA_KEY,
+                'pinata_secret_api_key': PINATA_SECRET,
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error al eliminar el archivo con CID ${cid}: ${response.statusText}`);
+        }
+        console.log(`Archivo con CID ${cid} eliminado de Pinata.`);
+    } catch (error) {
+        console.error(`Error al eliminar el archivo con CID ${cid}:`, error.message);
+        throw error;
+    }
+};
+
+module.exports = {uploadToPinata, deleteFromPinata}

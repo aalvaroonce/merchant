@@ -13,10 +13,10 @@ Content-Type: application/json
 ### Crear una nueva página web
 POST http://localhost:3000/api/web
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDSUYiOiJIMDM4NzIzNDgiLCJpYXQiOjE3MzIwMzc5MTN9.qvMTZP5vFDfL1wZKEj6C41-9O-8a62JjDvoq_PnYw6U
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDSUYiOiJIMDM4MjIzNDgiLCJyb2xlIjoiYml6IiwiaWF0IjoxNzMyNTMwNDI0fQ.nUGYxh3YEnLKPOuYgwAnQlyl4NnLrmhDLEZe72gSnsw
 
 {
-    "businessCIF": "H03872348",
+    "businessCIF": "H03822348",
     "city": "Barcelona",
     "activity": "Restaurante",
     "heading": "Delicias de Barcelona",
@@ -51,9 +51,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDSUYiOiJMOTgzMDI2N
 }
 
 ### Añadir la URL de la imagen a la base de datos y la original a storage
-PATCH http://localhost:3000/api/web//memory/addimage/L98302673 
+PATCH http://localhost:3000/api/web//memory/addimage/H03822348 
 Content-Type: multipart/form-data; boundary=Boundry
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDSUYiOiJMOTgzMDI2NzMiLCJpYXQiOjE3MzA4MjU2NTd9.xXiaa1PgHMcgndjDNlLEjWsKysB0KbIa94FPrcmgRVU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDSUYiOiJIMDM4MjIzNDgiLCJyb2xlIjoiYml6IiwiaWF0IjoxNzMyNTMwNDI0fQ.nUGYxh3YEnLKPOuYgwAnQlyl4NnLrmhDLEZe72gSnsw
 
 --Boundry
 Content-Disposition: form-data; name="image"; filename="restaurante2.jpg"
@@ -83,9 +83,9 @@ Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDSUYiOiJIMDM4NzIzNDciLCJpYXQiOjE3Mjk2MTM5NTV9.VjtRsKQyzbihbUQ94KjS-JfEt5dj_nGiuXPxghD8bas
 
 ### Eliminar una página web (borrado físico)
-DELETE http://localhost:3000/api/web/H03872347?logic=false
+DELETE http://localhost:3000/api/web/H03822348?logic=false
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDSUYiOiJIMDM4NzIzNDciLCJpYXQiOjE3Mjk2MTM5NTV9.VjtRsKQyzbihbUQ94KjS-JfEt5dj_nGiuXPxghD8bas
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDSUYiOiJIMDM4MjIzNDgiLCJyb2xlIjoiYml6IiwiaWF0IjoxNzMyNTMwNDI0fQ.nUGYxh3YEnLKPOuYgwAnQlyl4NnLrmhDLEZe72gSnsw
 
 ### Buscar webs en una ciudad específica y con una actividad específica, ordenadas por scoring
 GET http://localhost:3000/api/web/search/empty/Restaurante?sortByScoring=true&upwards=false

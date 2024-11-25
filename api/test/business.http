@@ -3,7 +3,7 @@
 # Guardar un comercio
 POST http://localhost:3000/api/business 
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzFmZjk5ZjhiZWFiMWUyOGY0MGMxYjUiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzI0ODY4MTMsImV4cCI6MTczMjU3MzIxM30.uby2bzRP-vyx8ySsWdjmQqcZusJurFWkUt4Xz9r9WGA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzFmZjk5ZjhiZWFiMWUyOGY0MGMxYjUiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzI1MzAzNTcsImV4cCI6MTczMjYxNjc1N30.oRcRf-aGtt-Z9RuqqrrbnJca4dw1o8PA-yp7eN8xuek
 
 {
     "name":"Inditex",
@@ -18,14 +18,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzFmZjk5Z
 # TOKEN PRIMARK eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJDSUYiOiJQMTI4NzIzNDAiLCJpYXQiOjE3Mjk2MTM5Nzh9.njdIcTwavzXVQRIiA5OInRNBG7l1KRshyiwGt9tFjYE
 POST http://localhost:3000/api/business 
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzFmZjk5ZjhiZWFiMWUyOGY0MGMxYjUiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzA4MjUwMzUsImV4cCI6MTczMDkxMTQzNX0.6Osav3csXzp2VEvT5hSm1eKn2ELZNu_26gganTikEGY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzFmZjk5ZjhiZWFiMWUyOGY0MGMxYjUiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzI1MzAzNTcsImV4cCI6MTczMjYxNjc1N30.oRcRf-aGtt-Z9RuqqrrbnJca4dw1o8PA-yp7eN8xuek
 
 {
     "name":"Alcampo",
     "CIF":"M98498398",
     "direction":"c/ serrano 10",
     "email":"primark@email.com",
-    "phone":"336772882"
+    "phone":"336772882",
+    "password":"Contraseña1234."
 }
 ###
 POST http://localhost:3000/api/business 
@@ -95,7 +96,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzE3YjVlY
 
 ### Borrar un commercio por su CIF, fisico
 DELETE http://localhost:3000/api/business/H03822348?logic=false
-Authorization: Bearer  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzFmZjk5ZjhiZWFiMWUyOGY0MGMxYjUiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzI0ODY4MTMsImV4cCI6MTczMjU3MzIxM30.uby2bzRP-vyx8ySsWdjmQqcZusJurFWkUt4Xz9r9WGA
+Authorization: Bearer  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NzFmZjk5ZjhiZWFiMWUyOGY0MGMxYjUiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MzI1MzAzNTcsImV4cCI6MTczMjYxNjc1N30.oRcRf-aGtt-Z9RuqqrrbnJca4dw1o8PA-yp7eN8xuek
 
 
 ### Llamada para restaurar un borrado lógico
