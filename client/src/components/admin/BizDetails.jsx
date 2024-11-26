@@ -42,20 +42,11 @@ export default function BizDetails({ cif }) {
 
     return (
         <div className="biz-details">
-            <h1 className="biz-heading">{biz.heading}</h1>
-            <h3 className="biz-city">{biz.city}</h3>
-            <h3 className="biz-activity">{biz.activity}</h3>
-            <h3 className="biz-summary">{biz.summary}</h3>
-            <div className="lista-container">
-                {biz.textArray.map((text, index) => (
-                    <div key={index} className="lista-item">
-                        <p>{text}</p>
-                    </div>
-                ))}
-            </div>
-            {biz.imageArray.map((imageUrl, index) => (
-                <img key={index} className="biz-image" src={imageUrl} alt={`Imagen ${index + 1}`} />
-            ))}
+            <h1 className="biz-heading">{biz.name}</h1>
+            <h3 className="biz-city">{biz.CIF}</h3>
+            <h3 className="biz-activity">{biz.direction}</h3>
+            <h3 className="biz-summary">{biz.email}</h3>
+            <h3 className="biz-summary">{biz.phone}</h3>
         </div>
     );
 }

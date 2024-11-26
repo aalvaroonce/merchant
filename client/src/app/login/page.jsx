@@ -19,7 +19,8 @@ function LogIn() {
             const result = await handleLogin(data);
 
             if (result.data?.token) {
-                setMensaje({ text: result.message, type: 'exito' });    
+                setMensaje({ text: result.message, type: 'exito' }); 
+                console.log(result.data.biz.role)   
                 
                 if (result.data.user?.role === 'admin') {
                     router.push('/admin');

@@ -32,14 +32,13 @@ async function handleLogin(body) {
         if (data.data.user) {
             cookieStore.set({
                 name: 'user',
-                value: JSON.stringify(data.data.user), // Serializa el objeto si es necesario
+                value: JSON.stringify(data.data.user), 
                 path: '/',
             });
         } else if (data.data.biz) {
             cookieStore.set({
                 name: 'biz',
-                value: JSON.stringify(data.data.biz), // Serializa el objeto si es necesario
-                path: '/',
+                value: JSON.stringify(data.data.biz), 
             });
         }
 

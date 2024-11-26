@@ -16,16 +16,16 @@ function Navbar({ role }) {
 
     const handleLogOut = async () => {
         try {
-            const response = await handleCookies()
+            const response = await handleCookies();
 
             if (response.ok) {
-                setLogoutMessage(response.message); 
+                setLogoutMessage(response.message);
 
                 setTimeout(() => {
-                    setMenuOpen(!menuOpen)
-                    setLogoutMessage(null); 
-                    router.push('/login'); 
-                }, 2000); 
+                    setMenuOpen(false);
+                    setLogoutMessage(null);
+                    router.push('/login');
+                }, 2000);
             } else {
                 console.error('Error al cerrar sesión');
             }
@@ -58,7 +58,7 @@ function Navbar({ role }) {
                     <>
                         <div
                             className="px-4 py-2 hover:bg-gray-600 cursor-pointer"
-                            onClick={() => handleNavigation('/biz/perfil')}
+                            onClick={() => handleNavigation('/biz/profile')}
                         >
                             Perfil de Comercio
                         </div>
@@ -107,6 +107,23 @@ function Navbar({ role }) {
         }
     };
 
+    const handleProjectClick = () => {
+        switch (role) {
+            case 'biz':
+                handleNavigation('/biz');
+                break;
+            case 'user':
+                handleNavigation('/user');
+                break;
+            case 'admin':
+                handleNavigation('/admin');
+                break;
+            default:
+                handleNavigation('/');
+                break;
+        }
+    };
+
     return (
         <>
             {logoutMessage && (
@@ -119,7 +136,7 @@ function Navbar({ role }) {
             <nav className="flex justify-between items-center bg-gray-800 p-4 text-white">
                 <div
                     className="font-bold text-xl cursor-pointer"
-                    onClick={() => router.push('/')}
+                    onClick={handleProjectClick}
                 >
                     MiProyecto
                 </div>

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import WebReview from "./WebReview";
 import getWebDetails from './utils/handleWebDetails'; 
-import handleAuth from "./utils/handleAuth";
+import handleAuth from "./utils/checkUserExists";
 
 function WebDetails({ cif }) {
     const [web, setWeb] = useState(null);

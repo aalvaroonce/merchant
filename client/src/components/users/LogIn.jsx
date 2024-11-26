@@ -27,15 +27,19 @@ function LogIn() {
                 });
 
                 if (result.data?.user) {
-                    cookies.set({
-                        name: 'user',
-                        value: result.data.user,
-                        path: '/'
-                    });
-
                     if (result.data.user.role === 'admin') {
+                        cookies.set({
+                            name: 'admin',
+                            value: result.data.user,
+                            path: '/'
+                        });
                         router.push('/menu-admin');
                     } else if (result.data.user.role === 'user') {
+                        cookies.set({
+                            name: 'user',
+                            value: result.data.user,
+                            path: '/'
+                        });
                         router.push('/menu-user');
                     }
                 } else if (result.data?.biz) {
@@ -50,13 +54,14 @@ function LogIn() {
 
                 setMensaje({ text: result.message, type: 'exito' });
             } else if (result.errors && Array.isArray(result.errors)) {
-                const errorMessages = result.errors.map((error) => error.msg).join(', ');
-                setMensaje({ text: errorMessages, type: 'error' });
+                console.log(result.errors)
+                setMensaje({ text: 'Ocurrió un error en el inicio de sesion', type: 'error' });
             } else {
                 setMensaje({ text: 'Ocurrió un error desconocido', type: 'error' });
             }
         } catch (error) {
-            setMensaje({ text: error.message || 'Error en la conexión', type: 'error' });
+            console.log(error)
+            setMensaje({ text: 'Error en la conexión', type: 'error' });
         } finally {
             setLoading(false);
         }

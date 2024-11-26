@@ -1,16 +1,15 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import UserDetails from './UserDetails';
-import Filter from './Filter';
-import showUsers from './utils/handleShowUsers';
+import showUsers from '@/components/business/utils/handleShowUsers';
+import EmailModal from '@/components/business/EmailModal';
 
-function WebList() {
+function UserList() {
     const [users, setUsers] = useState([]);
-    const [idSelected, setIdSelected] = useState("");
-    const [filters, setFilters] = useState({ upwards: "true" });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedUser, setSelectedUser] = useState(null);
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -18,48 +17,61 @@ function WebList() {
             setError(null);
 
             try {
-                const UsersData = await showUsers(filters); 
+                const UsersData = await showUsers(); 
                 setUsers(UsersData);
             } catch (error) {
-                setError("Error al cargar las users.");
+                setError("Error al cargar los usuarios.");
             } finally {
                 setLoading(false);
             }
         };
 
         fetchUsers();
-    }, [filters]);
+    }, []);
 
-    const handleFilterChange = (newFilters) => {
-        setFilters(newFilters);
+    const openModal = (user) => {
+        setSelectedUser(user);
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setSelectedUser(null);
+        setIsModalOpen(false);
     };
 
     return (
         <div className="users-list">
-            <h2 className="users-list-title">Lista de users</h2>
-            <Filter onFilterChange={handleFilterChange} />
+            <h2 className="users-list-title">Lista de usuarios</h2>
 
-            {loading && <p>Cargando users...</p>}
+            {loading && <p>Cargando usuarios...</p>}
             {error && <p className="error">{error}</p>}
 
             <div className="users-container">
                 {!loading && !error && users.map((user) => (
-                    <div key={user._id} className="user-card">
-                        <h3
-                            className="user-heading"
-                            onClick={() => setIdSelected(user._id)}
-                        >
-                            {user.heading}
-                        </h3>
-                        <p className="user-city">Ciudad: {user.city}</p>
-                        <p className="user-activity">Actividad: {user.activity}</p>
+                    <div key={user._id} className="user-card relative">
+                        <h3 className="user-heading">{user.name}</h3>
+                        <p className="user-city">email: {user.email}</p>
+
+                        <div className="absolute top-0 right-0">
+                            <button
+                                onClick={() => openModal(user)}
+                                className="text-gray-600 hover:text-gray-800 focus:outline-none"
+                            >
+                                ⋮
+                            </button>
+                        </div>
                     </div>
                 ))}
             </div>
 
-            {idSelected && <UserDetails id={idSelected} />}
+            {isModalOpen && selectedUser && (
+                <EmailModal
+                    user={selectedUser}
+                    onClose={closeModal}
+                />
+            )}
         </div>
     );
 }
 
-export default WebList;
+export default UserList;

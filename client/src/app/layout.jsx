@@ -15,7 +15,7 @@ export default async function AppLayout({ children }) {
     const bizRole = cookiesStore.get('biz')?.value;
 
 
-    const role = userRole? 'user': bizRole? bizRole: 'guest';
+    const role = userRole? 'user': bizRole? 'biz': 'guest';
 
     return (
         <html lang="en">

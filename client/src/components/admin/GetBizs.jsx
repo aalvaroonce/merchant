@@ -1,34 +1,34 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import WebDetails from './WebDetails';
+import BizDetails from './BizDetails';
 import Filter from './Filter';
 import getBizs from './utils/handleGetBizs';
+import BizDetails from './BizDetails';
 
-function BizList() {
-    const [webs, setWebs] = useState([]);
-    const [cifSelected, setCifSelected] = useState("");
-    const [filters, setFilters] = useState({ city: "", activity: "", sortByScoring: false, upwards: "true" });
+function UserList() {
+    const [bizs, setBizs] = useState([]);
+    const [cif, setCif] = useState("");
+    const [filters, setFilters] = useState({ upwards: "true" });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchWebs = async () => {
+        const fetchbizs = async () => {
             setLoading(true);
             setError(null);
 
             try {
-                const websData = await getBizs(filters); 
-                setWebs(websData);
+                const bizsData = await getBizs(filters); 
+                setBizs(bizsData);
             } catch (error) {
-                setError("Error al cargar las webs.");
-                console.error(error);
+                setError("Error al cargar las bizs.");
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchWebs();
+        fetchbizs();
     }, [filters]);
 
     const handleFilterChange = (newFilters) => {
@@ -36,31 +36,31 @@ function BizList() {
     };
 
     return (
-        <div className="web-list">
-            <h2 className="web-list-title">Lista de Webs</h2>
+        <div className="bizs-list">
+            <h2 className="bizs-list-title">Lista de comercios</h2>
             <Filter onFilterChange={handleFilterChange} />
 
-            {loading && <p>Cargando webs...</p>}
+            {loading && <p>Cargando comercios...</p>}
             {error && <p className="error">{error}</p>}
 
-            <div className="webs-container">
-                {!loading && !error && webs.map((web) => (
-                    <div key={web.businessCIF} className="web-card">
+            <div className="bizs-container">
+                {!loading && !error && bizs.map((biz) => (
+                    <div key={biz.CIF} className="biz-card">
                         <h3
-                            className="web-heading"
-                            onClick={() => setCifSelected(web.businessCIF)}
+                            className="biz-heading"
+                            onClick={() => setCif(biz.CIF)}
                         >
-                            {web.heading}
+                            {biz.name}
                         </h3>
-                        <p className="web-city">Ciudad: {web.city}</p>
-                        <p className="web-activity">Actividad: {web.activity}</p>
+                        <p className="biz-city">Teléfono: {biz.phone}</p>
+                        <p className="biz-activity">Email: {biz.email}</p>
                     </div>
                 ))}
             </div>
 
-            {cifSelected && <WebDetails cif={cifSelected} />}
+            {cif && <BizDetails id={cif} />}
         </div>
     );
 }
 
-export default BizList;
+export default UserList;

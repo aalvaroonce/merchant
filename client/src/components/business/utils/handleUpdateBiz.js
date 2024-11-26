@@ -1,7 +1,14 @@
 'use server';
 
-export async function updateBiz(bizCIF, token, body) {
+async function handleUpdateBiz(body) {
     try {
+
+        const cookiesStore= cookies();
+        const tokenInfo = cookiesStore.get('token')
+        const token= tokenInfo.value
+        const biz = JSON.parse(cookiesStore.get('biz').value)
+        const bizCIF= biz.CIF
+
         const response = await fetch(`${process.env.API_URL}/business/${bizCIF}`, {
             method: 'PUT',
             headers: {
@@ -22,3 +29,5 @@ export async function updateBiz(bizCIF, token, body) {
         throw new Error("No se pudo actualizar el comercio. Intenta nuevamente.");
     }
 }
+
+export default handleUpdateBiz;

@@ -1,9 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import FormularioWeb from '@/components/formularios/FormularioWeb.jsx';
+import FormularioUpdateWeb from '@/components/formularios/FormularioUpdateWeb.jsx';
 import Mensaje from '@/components/Mensaje.jsx';
 import  handleUpdateWeb  from '@/components/business/utils/handleUpdateWeb.js';
+import DeleteWeb from '@/components/business/DeleteWeb';
 
 export default function updateWeb() {
     const [mensaje, setMensaje] = useState(null);
@@ -17,15 +18,16 @@ export default function updateWeb() {
             setLoading(false);
             setMensaje({ text: result.message || "Comercio actualizado con éxito.", type: "exito" });
         } catch (error) {
-            setLoading(false);
+            setLoading(false); 
             setMensaje({ text: error.message || "Error al actualizar el comercio.", type: "error" });
         }
     };
 
     return (
         <>
-            <FormularioWeb sendData={handleSendData} />
+            <FormularioUpdateWeb sendData={handleSendData} />
             {loading ? <p>Cargando...</p> : <Mensaje mensaje={mensaje} />}
+            <DeleteWeb/>
         </>
     );
 }

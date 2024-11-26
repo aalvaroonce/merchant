@@ -25,9 +25,8 @@ export default function FormularioUpdateUser({ sendData }) {
         const fetchUserData = async () => {
             try {
                 const userData = await getUser();
-                const { role, ...filteredData } = JSON.parse(userData);
                 reset({
-                    ...filteredData,
+                    ...JSON.parse(userData),
                     hobbies: filteredData.hobbies || [],
                 });
             } catch (error) {
@@ -52,7 +51,6 @@ export default function FormularioUpdateUser({ sendData }) {
         <div className="formulario-container">
             <h3>Editar Usuario</h3>
             <form onSubmit={handleSubmit(onSubmit)}>
-                {/* Campos del formulario */}
                 <div>
                     <label>Nombre</label>
                     <input
@@ -113,6 +111,10 @@ export default function FormularioUpdateUser({ sendData }) {
                             minLength: {
                                 value: 2,
                                 message: "La ciudad debe tener al menos 2 caracteres",
+                            },
+                            maxLength: {
+                                value: 20,
+                                message: "La ciudad debe tener menos de 20 caracteres",
                             },
                         })}
                     />

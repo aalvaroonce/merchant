@@ -1,6 +1,12 @@
 'use server';
 
-export async function showUsers(token) {
+import { cookies } from "next/headers";
+
+async function showUsers() {
+    const cookiesStore= cookies();
+    const tokenInfo = cookiesStore.get('token')
+    const token= tokenInfo.value
+
     try {
         
         const response = await fetch(`${process.env.API_URL}/business/users`, {
@@ -17,7 +23,10 @@ export async function showUsers(token) {
         const data = await response.json();
         return data;
     } catch (error) {
-        console.error("Error deleting user:", error);
-        throw new Error("No se pudo borrar el usuario. Intenta nuevamente.");
+        console.error("Error showing users:", error);
+        throw new Error("No se pudo enseñar el usuario. Intenta nuevamente.");
     }
 }
+
+
+export default showUsers
