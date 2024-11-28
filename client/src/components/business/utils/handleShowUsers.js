@@ -21,7 +21,7 @@ async function showUsers() {
         }
 
         const data = await response.json();
-        return data;
+        return data.data;
     } catch (error) {
         console.error("Error showing users:", error);
         throw new Error("No se pudo enseñar el usuario. Intenta nuevamente.");

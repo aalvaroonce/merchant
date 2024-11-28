@@ -3,48 +3,48 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Filter from '@/components/admin/Filter';
-import getBizs from '@/components/admin/utils/handleGetBizs';
+import getWebs from '@/components/admin/utils/handleGetWebs';
 import Notification from '@/components/Notification';
 import Mensaje from '@/components/Mensaje';
-import BizCookies from '@/components/admin/utils/handleBizCookies';
-import restoreBiz from '@/components/admin/utils/handleRestoreBiz';
+import WebCookies from '@/components/admin/utils/handleWebCookies';
+import restoreWeb from '@/components/admin/utils/handleRestoreWeb';
 
-function BizList() {
-    const [bizs, setBizs] = useState([]);
-    const [filters, setFilters] = useState({ upwards: "true", deleted: "false" }); // Incluye 'deleted'
+function WebList() {
+    const [webs, setWebs] = useState([]);
+    const [filters, setFilters] = useState({ upwards: "true", deleted: "false" }); 
     const [loading, setLoading] = useState(false);
     const [mensaje, setMensaje] = useState(null);
-    const [selectedBiz, setSelectedBiz] = useState(null);
+    const [selectedWeb, setSelectedWeb] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [notification, setNotification] = useState(null);
 
     const router = useRouter();
 
-    useEffect(() => {
-        const fetchbizs = async () => {
+    useEffect(() => {  
+        const fetchWebs = async () => {
             setLoading(true);
             setMensaje(null);
 
             try {
-                const bizsData = await getBizs(filters); // Usa los filtros
-                setBizs(bizsData);
+                const websData = await getWebs(filters);
+                setWebs(websData);
             } catch (error) {
-                setMensaje({ type: "error", text: "Error al cargar las empresas." });
+                setMensaje({ type: "error", text: "Error al cargar las webs." });
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchbizs();
+        fetchWebs();
     }, [filters]);
 
     const handleFilterChange = (newFilters) => {
         setFilters(newFilters); 
     };
 
-    const handleRecoverBiz = async (cif) => {
+    const handleRecoverBiz = async (businessCIF) => {
         try {
-            const restoredBiz = restoreBiz(cif)
+            const restoredBiz = restoreWeb(businessCIF)
             if (restoredBiz){
                 setNotification({ type: "success", message: "Comercio recuperado con éxito." });
             }
@@ -55,28 +55,28 @@ function BizList() {
         }
     };
 
-    const handleUpdateBiz = (biz) => {
+    const handleUpdateBiz = (web) => {
         setShowModal(false); 
-        BizCookies(biz); 
-        router.push("/biz/profile/update-biz"); 
+        WebCookies(web); 
+        router.push("/biz/profile/update-web"); 
     };
 
     return (
         <div className="bizs-list">
-            <h2 className="bizs-list-title">Lista de comercios</h2>
+            <h2 className="bizs-list-title">Lista de webs</h2>
             <Filter onFilterChange={handleFilterChange} /> 
 
-            {loading && <p>Cargando comercios...</p>}
+            {loading && <p>Cargando webs...</p>}
             <Mensaje mensaje={mensaje} />
 
             <div className="bizs-container">
-                {!loading && bizs.map((biz) => (
-                    <div key={biz.CIF} className="biz-card">
-                        <h3 className="biz-heading">{biz.name}</h3>
-                        <p className="biz-city">Teléfono: {biz.phone}</p>
-                        <p className="biz-activity">Email: {biz.email}</p>
-                        <div className="biz-options">
-                            <button onClick={() => { setSelectedBiz(biz); setShowModal(true); }}>
+                {!loading && webs.map((web) => (
+                    <div key={web.businessCIF} className="web-card">
+                        <h3 className="web-heading">{web.heading}</h3>
+                        <p className="web-city">Ciudad: {web.city}</p>
+                        <p className="web-activity">Actividad: {web.activity}</p>
+                        <div className="web-options">
+                            <button onClick={() => { setSelectedWeb(web); setShowModal(true); }}>
                                 ...
                             </button>
                         </div>
@@ -84,19 +84,19 @@ function BizList() {
                 ))}
             </div>
 
-            {showModal && selectedBiz && (
+            {showModal && selectedWeb && (
                 <div className="modal-overlay">
                     <div className="modal-content">
-                        <h3>Opciones para {selectedBiz.name}</h3>
+                        <h3>Opciones para {selectedWeb.name}</h3>
                         <button
                             onClick={() => {
                                 setShowModal(false); 
-                                handleUpdateBiz(selectedBiz); 
+                                handleUpdateBiz(selectedWeb); 
                             }}
                         >
                             Actualizar comercio
                         </button>
-                        <button onClick={() => handleRecoverBiz(selectedBiz.CIF)}>Recuperar comercio</button>
+                        <button onClick={() => handleRecoverBiz(selectedWeb.businessCIF)}>Recuperar comercio</button>
                         <button onClick={() => setShowModal(false)}>Cerrar</button>
                     </div>
                 </div>
@@ -113,4 +113,4 @@ function BizList() {
     );
 }
 
-export default BizList;
+export default WebList;

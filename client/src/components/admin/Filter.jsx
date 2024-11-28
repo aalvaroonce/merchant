@@ -6,14 +6,21 @@ function Filter({ onFilterChange }) {
     const { control, setValue, watch } = useForm({
         defaultValues: {
             upwards: "true",
+            deleted: "false"
         },
     });
 
-    const upwardsValue = watch("upwards"); 
+    const upwardsValue = watch("upwards");
+    const deletedValue = watch("deleted");
 
     const handleUpwardsChange = (value) => {
-        setValue("upwards", value); 
-        onFilterChange({ upwards: value }); 
+        setValue("upwards", value);
+        onFilterChange({ upwards: value, deleted: deletedValue }); 
+    };
+
+    const handleDeletedChange = (value) => {
+        setValue("deleted", value);
+        onFilterChange({ upwards: upwardsValue, deleted: value }); 
     };
 
     return (
@@ -50,6 +57,41 @@ function Filter({ onFilterChange }) {
                         )}
                     />
                     Descendente
+                </label>
+            </div>
+
+            <div className="deleted-options">
+                <label className="deleted-option">
+                    <Controller
+                        name="deleted"
+                        control={control}
+                        render={({ field }) => (
+                            <input
+                                {...field}
+                                type="radio"
+                                value="false"
+                                checked={deletedValue === "false"}
+                                onChange={() => handleDeletedChange("false")}
+                            />
+                        )}
+                    />
+                    Activas
+                </label>
+                <label className="deleted-option">
+                    <Controller
+                        name="deleted"
+                        control={control}
+                        render={({ field }) => (
+                            <input
+                                {...field}
+                                type="radio"
+                                value="true"
+                                checked={deletedValue === "true"}
+                                onChange={() => handleDeletedChange("true")}
+                            />
+                        )}
+                    />
+                    Inhabilitadas
                 </label>
             </div>
         </div>

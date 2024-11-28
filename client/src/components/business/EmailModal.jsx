@@ -6,19 +6,16 @@ import FormularioEmail from '../formularios/FormularioEmail';
 function EmailModal({ user, onClose }) {
     const [notification, setNotification] = useState(null);
 
-    const handleSendEmail = async (e) => {
-        e.preventDefault();
-        const formData = new FormData(e.target);
+    const handleSendEmail = async (data) => {
         const emailData = {
-            subject: formData.get('subject'),
-            text: formData.get('text'),
+            ...data,
             to: user.email,
         };
 
         try {
             await sendEmail(emailData);
             setNotification({ message: 'Correo enviado con éxito.', type: 'success' });
-            setTimeout(onClose, 2000); // Cerrar el modal después de 2 segundos
+            setTimeout(onClose, 5000); 
         } catch (error) {
             setNotification({ message: 'Error al enviar el correo.', type: 'error' });
             console.error(error);
@@ -29,7 +26,7 @@ function EmailModal({ user, onClose }) {
         <div className="modal fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
             <div className="modal-content bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
                 <h2 className="text-lg font-bold mb-4">Enviar Email</h2>
-                <FormularioEmail onSubmit={{ submit: handleSendEmail, cancel: onClose }} />
+                <FormularioEmail sendData={handleSendEmail} onClose={ onClose } />
             </div>
 
             {notification && (

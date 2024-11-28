@@ -24,6 +24,12 @@ async function updateUser(body) {
         }
 
         const data = await response.json();
+
+        cookiesStore.set({
+            name: 'user',
+            value: JSON.stringify(data.data.user), 
+            path: '/',
+        });
         return data;
     } catch (error) {
         console.error("Error updating user:", error);

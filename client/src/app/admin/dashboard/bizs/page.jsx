@@ -11,7 +11,7 @@ import restoreBiz from '@/components/admin/utils/handleRestoreBiz';
 
 function BizList() {
     const [bizs, setBizs] = useState([]);
-    const [filters, setFilters] = useState({ upwards: "true", deleted: "false" }); // Incluye 'deleted'
+    const [filters, setFilters] = useState({ upwards: "true", deleted: "false" }); 
     const [loading, setLoading] = useState(false);
     const [mensaje, setMensaje] = useState(null);
     const [selectedBiz, setSelectedBiz] = useState(null);
@@ -26,7 +26,7 @@ function BizList() {
             setMensaje(null);
 
             try {
-                const bizsData = await getBizs(filters); // Usa los filtros
+                const bizsData = await getBizs(filters); 
                 setBizs(bizsData);
             } catch (error) {
                 setMensaje({ type: "error", text: "Error al cargar las empresas." });

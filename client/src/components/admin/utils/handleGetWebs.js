@@ -2,14 +2,13 @@
 
 import { cookies } from "next/headers";
 
-async function getBizs(filters) {
+async function getWebs(filters) {
     try {
 
         const cookieStore = cookies();
         const tokenInfo = cookieStore.get('token')
         const token= tokenInfo.value
-        let url = `${process.env.API_URL}/business?upwards=${filters.upwards}&deleted=${filters.deleted}`;
-
+        let url = `${process.env.API_URL}/web?upwards=${filters.upwards}&deleted=${filters.deleted}`;
         const response = await fetch(url, {
             method: 'GET',
             headers: {
@@ -23,11 +22,11 @@ async function getBizs(filters) {
         }
 
         const data = await response.json();
-        return data.bizs;
+        return data.webs;
     } catch (error) {
-        console.error("Error fetching bizs:", error);
-        throw new Error("Error al obtener los datos de los comercios.");
+        console.error("Error fetching webs:", error);
+        throw new Error("Error al obtener los datos de las webs.");
     }
 }
 
-export default getBizs
+export default getWebs

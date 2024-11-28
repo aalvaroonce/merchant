@@ -1,31 +1,35 @@
 'use client';
 
 import { useState } from 'react';
-import FormularioPut from '@/components/formularios/FormularioUserUpdate.jsx';
-import Mensaje from '@/components/Mensaje.jsx';
+import FromularioUpdateBiz from '@/components/formularios/FormularioUpdateBiz';
+import Notification from '@/components/Notification.jsx';
 import handleUpdateBiz from '@/components/business/utils/handleUpdateBiz.js';
 
 export default function UpdateBiz() {
-    const [mensaje, setMensaje] = useState(null);
-    const [loading, setLoading] = useState(false);
+    const [notification, setNotification] = useState(null);
 
     const handleSendData = async (data) => {
 
         try {
-            setLoading(true);
             const result = await handleUpdateBiz(data); 
-            setLoading(false);
-            setMensaje({ text: result.message || "Comercio actualizado con éxito.", type: "exito" });
+            setNotification({ message: result.message || "Comercio actualizado con éxito.", type: "succes" });
         } catch (error) {
-            setLoading(false);
-            setMensaje({ text: error.message || "Error al actualizar el comercio.", type: "error" });
+            setNotification({ message: error.message || "Error al actualizar el comercio."});
         }
     };
 
     return (
         <>
-            <FormularioPut sendData={handleSendData} />
-            {loading ? <p>Cargando...</p> : <Mensaje mensaje={mensaje} />}
+        <Suspense fallback={<p>Cargando componente...</p>}>
+            {notification && (
+                <Notification
+                    message={notification.message}
+                    type={notification.type}
+                    onClose={() => setNotification(null)}
+                />)}
+            <FromularioUpdateBiz sendData={handleSendData} />
+            <DeleteWeb />
+        </Suspense>
         </>
     );
 }

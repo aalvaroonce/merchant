@@ -1,25 +1,52 @@
+import { NextResponse } from "next/server";
+
 export function middleware(request) {
-    const currentUser = request.cookies.get('token')?.value;
+    const user = request.cookies.get('user')?.value;
+    const userRole = user? JSON.parse(user).role: undefined;
+    const bizRole = request.cookies.get('biz')?.value;
 
-    const staticFileExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.svg', '.css', '.ico', '.woff', '.woff2', '.ttf', '.eot'];
-    const pathname = request.nextUrl.pathname;
+    const role = userRole === 'user'? 'user': userRole? 'admin': bizRole? 'biz': 'guest';
 
-    if (staticFileExtensions.some((ext) => pathname.endsWith(ext))) {
-        return; 
+
+    const publicRoutes = ['/login', '/register', '/'];
+
+  
+    if (
+        pathname.startsWith('/_next') || 
+        pathname.startsWith('/static') ||
+        pathname.startsWith('/images') || 
+        pathname.startsWith('/favicon.ico') || 
+        pathname.startsWith('/robots.txt') || 
+        pathname.startsWith('/sitemap.xml') || 
+        pathname.match(/\.(jpg|jpeg|png|gif|svg|ico|webp|css|js|woff|woff2|ttf|otf|eot|ttc)$/i) 
+    ) {
+        return NextResponse.next();
     }
 
-    if (currentUser && 
-        !pathname.startsWith('/dashboard') &&
-        !pathname.startsWith('/login') &&
-        !pathname.startsWith('/register')) {
-        return Response.redirect(new URL('/', request.url));
+   
+    if (token && publicRoutes.includes(pathname)) {
+        return NextResponse.redirect(new URL('/dashboard', request.url));
     }
 
-    if (!currentUser && pathname.startsWith('/dashboard')) {
-        return Response.redirect(new URL('/login', request.url));
+    if (!token && (pathname.startsWith('/dashboard') || pathname.startsWith('/user') || pathname.startsWith('/biz'))) {
+        return NextResponse.redirect(new URL('/login', request.url));
     }
+
+    if (role === 'user' && !pathname.startsWith('/user')) {
+        return NextResponse.redirect(new URL('/user', request.url));
+    }
+
+    if (role === 'biz' && !pathname.startsWith('/biz')) {
+        return NextResponse.redirect(new URL('/biz', request.url));
+    }
+
+    if (role === 'admin') {
+        return NextResponse.next();
+    }
+
+    return NextResponse.redirect(new URL('/login', request.url));
 }
 
 export const config = {
-    matcher: '/:path*', 
+    matcher: '/:path*'
 };

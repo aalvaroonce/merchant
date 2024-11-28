@@ -1,9 +1,11 @@
+import ChangePasswordModal from "../ChangePassword";
 import { useForm, useFieldArray } from "react-hook-form";
 import { useEffect, useState } from "react";
 import getUser from "./utils/handleGetUser";
 
 export default function FormularioUpdateUser({ sendData }) {
     const [loading, setLoading] = useState(true);
+    const [isPasswordModalOpen, setPasswordModalOpen] = useState(false);
 
     const { register, handleSubmit, control, reset, formState: { errors } } = useForm({
         defaultValues: {
@@ -25,9 +27,10 @@ export default function FormularioUpdateUser({ sendData }) {
         const fetchUserData = async () => {
             try {
                 const userData = await getUser();
+                const parsedData = JSON.parse(userData);
                 reset({
-                    ...JSON.parse(userData),
-                    hobbies: filteredData.hobbies || [],
+                    ...parsedData,
+                    hobbies: parsedData.hobbies || []
                 });
             } catch (error) {
                 console.warn("Error al obtener los datos del usuario:", error);
@@ -149,6 +152,11 @@ export default function FormularioUpdateUser({ sendData }) {
 
                 <input type="submit" value="Guardar Cambios" />
             </form>
+
+            {isPasswordModalOpen && <ChangePasswordModal
+                onClose={() => setPasswordModalOpen(false)}
+                onSubmit={handleChangePassword}
+            />}
         </div>
     );
 }

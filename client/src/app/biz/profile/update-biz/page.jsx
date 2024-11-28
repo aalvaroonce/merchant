@@ -1,57 +1,58 @@
 'use client';
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import FormularioUpdateBiz from "@/components/formularios/FormularioUpdateBiz";
 import updateBiz from "@/components/business/utils/handleUpdateBiz.js";
 import changePassword from "@/components/business/utils/handlePassword.js";
 import Notification from "@/components/Notification";
+import { useRouter } from 'next/navigation'; 
 
 export default function UpdateBiz() {
-    const [mensaje, setMensaje] = useState(null); // { text: "", type: "" }
-    const [loading, setLoading] = useState(false);
-    const [isVisible, setVisible] = useState(false);
+    const [notification, setNotification] = useState(null); // { text: "", type: "" }
+    const router= useRouter()
 
     const handleSendData = async (data) => {
         try {
-            setLoading(true);
-            const result = await updateBiz(data); 
-            setMensaje({ text: result.message || "Comercio actualizado con éxito.", type: "success" });
+            const result = await updateBiz(data);
+            setNotification({ message: result.message || "Comercio actualizado con éxito.", type: "success" });
+            setTimeout(() => {
+                router.push("/biz/profile");
+            }, 2000);
         } catch (error) {
-            setMensaje({ text: error.message || "Error al actualizar el comercio.", type: "error" });
-        } finally {
-            setLoading(false);
-            setVisible(true);
-        }
+            setNotification({ message: error.message || "Error al actualizar el comercio.", type: "error" });
+            setTimeout(() => {
+                router.push("/biz/profile");
+            }, 2000);
+        } 
     };
 
     const handleChangePassword = async (data) => {
         try {
-            setLoading(true);
             const result = await changePassword(data);
-            setMensaje({ text: result.message || "Contraseña actualizada con éxito.", type: "success" });
+            setNotification({ message: result.message || "Contraseña actualizada con éxito.", type: "success" });
         } catch (error) {
-            setMensaje({ text: error.message || "Error al cambiar la contraseña.", type: "error" });
-        } finally {
-            setLoading(false);
-            setVisible(true); 
-        }
+            setNotification({ message: error.message || "Error al cambiar la contraseña.", type: "error" });
+            setTimeout(() => {
+                router.push("/biz/profile");
+            }, 2000);
+        } 
     };
-
-    const closeNotification = () => setVisible(false);
 
     return (
         <>
-            <FormularioUpdateBiz
-                sendData={handleSendData}
-                handleChangePassword={handleChangePassword}
-            />
-            {loading && <p>Cargando...</p>}
-            {isVisible && mensaje && (
-                <Notification
-                    message={mensaje.text}
-                    type={mensaje.type}
-                    onClose={closeNotification}
+    
+            <Suspense fallback={<p>Cargando componente...</p>}>
+                {notification && (
+                    <Notification
+                        message={notification.message}
+                        type={notification.type}
+                        onClose={() => setNotification(null)}
+                    />)}
+                <FormularioUpdateBiz 
+                    sendData={handleSendData}
+                    handleChangePassword={handleChangePassword} 
                 />
-            )}
+            </Suspense>
+        
         </>
     );
 }

@@ -19,8 +19,7 @@ function LogIn() {
             const result = await handleLogin(data);
 
             if (result.data?.token) {
-                setMensaje({ text: result.message, type: 'exito' }); 
-                console.log(result.data.biz.role)   
+                setMensaje({ text: result.message, type: 'exito' });  
                 
                 if (result.data.user?.role === 'admin') {
                     router.push('/admin');
@@ -30,6 +29,7 @@ function LogIn() {
                     router.push('/biz');
                 }
             } else if (result.errors && Array.isArray(result.errors)) {
+                console.log(result.errors)
                 const errorMessages = result.errors.map((error) => error.msg).join(', ');
                 setMensaje({ text: errorMessages, type: 'error' });
             } else {

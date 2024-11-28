@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import FormularioUpdateUser from '../formularios/FormularioUserUpdate.jsx';
+import FormularioUpdateUser from '../formularios/FormularioUpdateUser.jsx';
 import Mensaje from '../Mensaje.jsx';
 import updateUser from './utils/handleUpdateUser.js';
 

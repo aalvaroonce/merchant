@@ -1,10 +1,13 @@
 'use server';
 
+import { cookies } from "next/headers";
+
 async function addReview(businessCIF, reviewData) {
     try {
 
         const cookiesStore= cookies();
-        const token = cookiesStore.get(token)
+        const tokenInfo = cookiesStore.get('token')
+        const token = tokenInfo.value
 
         const response = await fetch(`${process.env.API_URL}/web/addreview/${businessCIF}`, {
             method: 'PATCH',

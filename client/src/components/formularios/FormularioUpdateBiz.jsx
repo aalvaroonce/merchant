@@ -10,7 +10,6 @@ export default function FormularioUpdateBiz({ sendData, handleChangePassword }) 
     const { register, handleSubmit, reset, formState: { errors } } = useForm({
         defaultValues: {
             name: "",
-            CIF: "",
             direction: "",
             email: "",
             phone: 0
@@ -62,11 +61,6 @@ export default function FormularioUpdateBiz({ sendData, handleChangePassword }) 
                         })}
                     />
                     {errors.name && <p>{errors.name.message}</p>}
-                </div>
-                <div>
-                    <label>CIF</label>
-                    <input {...register("CIF", { required: "El CIF es requerido" })} />
-                    {errors.CIF && <p>{errors.CIF.message}</p>}
                 </div>
                 <div>
                     <label>Dirección</label>

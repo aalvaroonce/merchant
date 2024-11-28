@@ -60,7 +60,7 @@ function Navbar({ role }) {
                             className="px-4 py-2 hover:bg-gray-600 cursor-pointer"
                             onClick={() => handleNavigation('/biz/profile')}
                         >
-                            Perfil de Comercio
+                            Panel de Comercio
                         </div>
                         <div
                             className="px-4 py-2 hover:bg-gray-600 cursor-pointer"
@@ -75,7 +75,7 @@ function Navbar({ role }) {
                     <>
                         <div
                             className="px-4 py-2 hover:bg-gray-600 cursor-pointer"
-                            onClick={() => handleNavigation('/admin')}
+                            onClick={() => handleNavigation('/admin/dashboard')}
                         >
                             Panel de Admin
                         </div>

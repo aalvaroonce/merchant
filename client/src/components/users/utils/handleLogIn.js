@@ -35,6 +35,7 @@ async function handleLogin(body) {
                 value: JSON.stringify(data.data.user), 
                 path: '/',
             });
+
         } else if (data.data.biz) {
             cookieStore.set({
                 name: 'biz',

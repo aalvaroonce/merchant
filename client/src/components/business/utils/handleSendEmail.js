@@ -5,7 +5,6 @@ const sendEmail = async (emailData) => {
     const cookiesStore= cookies();
     const tokenInfo = cookiesStore.get('token')
     const token= tokenInfo.value
-
     try {
         
         const response = await fetch(`${process.env.API_URL}/business/mail`, {

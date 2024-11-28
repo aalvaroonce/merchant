@@ -1,6 +1,6 @@
 import { useForm, useFieldArray } from "react-hook-form";
 
-export default function FormularioSignIn({ sendData }) {
+export default function FormularioBiz({ sendData }) {
     const { register, handleSubmit, control, formState: { errors } } = useForm({
         defaultValues: {
             name: '',

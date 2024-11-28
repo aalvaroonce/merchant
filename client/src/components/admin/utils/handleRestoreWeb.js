@@ -2,16 +2,16 @@
 
 import { cookies } from "next/headers";
 
-async function getBizs(filters) {
+
+export default async function restoreWeb(cif) {
     try {
 
         const cookieStore = cookies();
         const tokenInfo = cookieStore.get('token')
         const token= tokenInfo.value
-        let url = `${process.env.API_URL}/business?upwards=${filters.upwards}&deleted=${filters.deleted}`;
 
-        const response = await fetch(url, {
-            method: 'GET',
+        const response = await fetch(`${process.env.API_URL}/web/restore/${cif}`, {
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
@@ -19,15 +19,13 @@ async function getBizs(filters) {
         });
 
         if (!response.ok) {
-            throw new Error(`Error: ${response.status}`);
+            throw new Error(`HTTP Error: ${response.status}- ${response.message}`);
         }
 
         const data = await response.json();
-        return data.bizs;
+        return data;
     } catch (error) {
-        console.error("Error fetching bizs:", error);
-        throw new Error("Error al obtener los datos de los comercios.");
+        console.error("Error web restoring:", error);
+        throw new Error("No se pudo la restauración de datos. Intenta nuevamente.");
     }
 }
-
-export default getBizs

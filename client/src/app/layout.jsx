@@ -11,16 +11,17 @@ export const metadata = {
 export default async function AppLayout({ children }) {
 
     const cookiesStore = await cookies();
-    const userRole = cookiesStore.get('user')?.value;
+    const user = cookiesStore.get('user')?.value;
+    const userRole = user? JSON.parse(user).role: undefined;
     const bizRole = cookiesStore.get('biz')?.value;
 
 
-    const role = userRole? 'user': bizRole? 'biz': 'guest';
+    const role = userRole === 'admin'? 'admin': userRole? 'user': bizRole? 'biz': 'guest';
 
     return (
         <html lang="en">
             <body className="min-h-screen bg-black">
-                <Navbar role={role} />
+                <Navbar role={role}/>
                 <main className="container mx-auto p-4">{children}</main>
             </body>
         </html>

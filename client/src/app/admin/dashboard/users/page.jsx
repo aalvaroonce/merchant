@@ -3,48 +3,48 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Filter from '@/components/admin/Filter';
-import getBizs from '@/components/admin/utils/handleGetBizs';
+import getUsers from '@/components/admin/utils/handleGetUsers';
 import Notification from '@/components/Notification';
 import Mensaje from '@/components/Mensaje';
-import BizCookies from '@/components/admin/utils/handleBizCookies';
-import restoreBiz from '@/components/admin/utils/handleRestoreBiz';
+import UserCookies from '@/components/admin/utils/handleUserCookies';
+import restoreUser from '@/components/admin/utils/handleRestoreUser';
 
-function BizList() {
-    const [bizs, setBizs] = useState([]);
-    const [filters, setFilters] = useState({ upwards: "true", deleted: "false" }); // Incluye 'deleted'
+function UserList() {
+    const [users, setUsers] = useState([]);
+    const [filters, setFilters] = useState({ upwards: "true", deleted: "false" }); 
     const [loading, setLoading] = useState(false);
     const [mensaje, setMensaje] = useState(null);
-    const [selectedBiz, setSelectedBiz] = useState(null);
+    const [selectedUser, setSelectedUser] = useState(null);
     const [showModal, setShowModal] = useState(false);
     const [notification, setNotification] = useState(null);
 
     const router = useRouter();
 
-    useEffect(() => {
-        const fetchbizs = async () => {
+    useEffect(() => {  
+        const fetchUsers = async () => {
             setLoading(true);
             setMensaje(null);
 
             try {
-                const bizsData = await getBizs(filters); // Usa los filtros
-                setBizs(bizsData);
+                const usersData = await getUsers(filters);
+                setUsers(usersData);
             } catch (error) {
-                setMensaje({ type: "error", text: "Error al cargar las empresas." });
+                setMensaje({ type: "error", text: "Error al cargar los usuarios." });
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchbizs();
+        fetchUsers();
     }, [filters]);
 
     const handleFilterChange = (newFilters) => {
         setFilters(newFilters); 
     };
 
-    const handleRecoverBiz = async (cif) => {
+    const handleRecoverBiz = async (id) => {
         try {
-            const restoredBiz = restoreBiz(cif)
+            const restoredBiz = restoreUser(id)
             if (restoredBiz){
                 setNotification({ type: "success", message: "Comercio recuperado con éxito." });
             }
@@ -55,28 +55,28 @@ function BizList() {
         }
     };
 
-    const handleUpdateBiz = (biz) => {
+    const handleUpdateBiz = (user) => {
         setShowModal(false); 
-        BizCookies(biz); 
-        router.push("/biz/profile/update-biz"); 
+        UserCookies(user); 
+        router.push("/user/profile"); 
     };
 
     return (
         <div className="bizs-list">
-            <h2 className="bizs-list-title">Lista de comercios</h2>
+            <h2 className="bizs-list-title">Lista de usuarios</h2>
             <Filter onFilterChange={handleFilterChange} /> 
 
-            {loading && <p>Cargando comercios...</p>}
+            {loading && <p>Cargando usuarios...</p>}
             <Mensaje mensaje={mensaje} />
 
             <div className="bizs-container">
-                {!loading && bizs.map((biz) => (
-                    <div key={biz.CIF} className="biz-card">
-                        <h3 className="biz-heading">{biz.name}</h3>
-                        <p className="biz-city">Teléfono: {biz.phone}</p>
-                        <p className="biz-activity">Email: {biz.email}</p>
-                        <div className="biz-options">
-                            <button onClick={() => { setSelectedBiz(biz); setShowModal(true); }}>
+                {!loading && users.map((user) => (
+                    <div key={user._id} className="user-card">
+                        <h3 className="user-heading">{user.name}</h3>
+                        <p className="user-city">Ciudad: {user.city}</p>
+                        <p className="user-activity">Email: {user.email}</p>
+                        <div className="user-options">
+                            <button onClick={() => { setSelectedUser(user); setShowModal(true); }}>
                                 ...
                             </button>
                         </div>
@@ -84,19 +84,19 @@ function BizList() {
                 ))}
             </div>
 
-            {showModal && selectedBiz && (
+            {showModal && selectedUser && (
                 <div className="modal-overlay">
                     <div className="modal-content">
-                        <h3>Opciones para {selectedBiz.name}</h3>
+                        <h3>Opciones para {selectedUser.name}</h3>
                         <button
                             onClick={() => {
                                 setShowModal(false); 
-                                handleUpdateBiz(selectedBiz); 
+                                handleUpdateBiz(selectedUser); 
                             }}
                         >
-                            Actualizar comercio
+                            Actualizar usuario
                         </button>
-                        <button onClick={() => handleRecoverBiz(selectedBiz.CIF)}>Recuperar comercio</button>
+                        <button onClick={() => handleRecoverBiz(selectedUser._id)}>Recuperar usuario</button>
                         <button onClick={() => setShowModal(false)}>Cerrar</button>
                     </div>
                 </div>
@@ -113,4 +113,4 @@ function BizList() {
     );
 }
 
-export default BizList;
+export default UserList;

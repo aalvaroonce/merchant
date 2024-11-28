@@ -1,6 +1,7 @@
 'use client';
 
 import { useForm, Controller } from "react-hook-form";
+import capitalize from "../formularios/utils/capitalize";
 
 function Filter({ onFilterChange }) {
     const { control, handleSubmit, watch, setValue } = useForm({
@@ -12,19 +13,12 @@ function Filter({ onFilterChange }) {
         },
     });
 
-    // Observa cambios en sortByScoring para manejar condicionales
     const sortByScoring = watch("sortByScoring");
-
-    const capitalize = (str) => {
-        if (typeof str !== "string" || str.length === 0) {
-            return "";
-        }
-        return str.trim().charAt(0).toUpperCase() + str.trim().slice(1).toLowerCase();
-    };
 
     const onSubmit = (data) => {
         const capitalizedActivity = capitalize(data.activity);
-        onFilterChange({ ...data, activity: capitalizedActivity });
+        const capitalizedCity = capitalize(data.city)
+        onFilterChange({ ...data, activity: capitalizedActivity, city: capitalizedCity });
     };
 
     return (

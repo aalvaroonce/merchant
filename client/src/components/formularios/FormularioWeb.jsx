@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form";
+import capitalize from "./utils/capitalize";
 
 function FormularioWeb({ sendData }) {
     const { register, handleSubmit, formState: { errors } } = useForm({
@@ -11,12 +12,14 @@ function FormularioWeb({ sendData }) {
     });
 
     const onSubmit = (data) => {
-        sendData(data);
+        const capitalizedActivity = capitalize(data.activity);
+        const capitalizedCity = capitalize(data.city)
+        sendData({ ...data, activity: capitalizedActivity, city: capitalizedCity });
     };
 
     return (
         <div className="formulario-container">
-            <h3>Registro de Negocio</h3>
+            <h3>Registro de Web</h3>
             <form onSubmit={handleSubmit(onSubmit)}>
 
                 <div>

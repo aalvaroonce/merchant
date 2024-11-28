@@ -2,31 +2,19 @@
 
 import { useState } from 'react';
 import Mensaje from '../Mensaje';
-import deleteWeb from './utils/handleDeleteWeb';
 
-export default function DeleteWeb() {
+export default function DeleteWeb({ onConfirmAction }) {
     const [mensaje, setMensaje] = useState(null);
-    const [isModalOpen, setIsModalOpen] = useState(false); 
-    const [action, setAction] = useState(null); 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [action, setAction] = useState(null);
 
     const openModal = (logic) => {
-        setAction(logic); 
-        setIsModalOpen(true); 
+        setAction(logic);
+        setIsModalOpen(true);
     };
 
     const closeModal = () => {
-        setIsModalOpen(false); 
-    };
-
-    const handleConfirmAction = async () => {
-        try {
-            const result = await deleteWeb(action); 
-            setMensaje({ text: result.message , type: "exito" });
-            setIsModalOpen(false); 
-        } catch (error) {
-            setMensaje({ text: error.message , type: "error" });
-            setIsModalOpen(false); 
-        }
+        setIsModalOpen(false);
     };
 
     return (
@@ -61,7 +49,7 @@ export default function DeleteWeb() {
                                 Cancelar
                             </button>
                             <button
-                                onClick={handleConfirmAction}
+                                onClick={() => onConfirmAction(action, setMensaje, setIsModalOpen)}
                                 className="px-4 py-2 bg-red-500 text-white rounded-md"
                             >
                                 {action ? "Inhabilitar" : "Borrar"}

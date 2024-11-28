@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import FormularioWeb from '@/components/formularios/FormularioWeb.jsx';
+import FormularioUpdateWeb from '@/components/formularios/FormularioUpdateWeb.jsx';
 import Mensaje from '@/components/Mensaje.jsx';
-import  handleUpdateWeb  from '@/components/business/utils/handleUpdateWeb.js';
+import handleUpdateWeb from '@/components/business/utils/handleUpdateWeb.js';
 
 export default function updateWeb() {
     const [mensaje, setMensaje] = useState(null);
@@ -24,7 +24,7 @@ export default function updateWeb() {
 
     return (
         <>
-            <FormularioWeb sendData={handleSendData} />
+            <FormularioUpdateWeb sendData={handleSendData} />
             {loading ? <p>Cargando...</p> : <Mensaje mensaje={mensaje} />}
         </>
     );
