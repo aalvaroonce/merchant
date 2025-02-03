@@ -62,46 +62,60 @@ function WebList() {
     };
 
     return (
-        <div className="bizs-list">
-            <h2 className="bizs-list-title">Lista de webs</h2>
-            <Filter onFilterChange={handleFilterChange} /> 
-
-            {loading && <p>Cargando webs...</p>}
+        <div className="p-6 bg-gray-900 min-h-screen text-white">
+            <h2 className="text-3xl font-bold mb-6 text-blue-400">Lista de Webs</h2>
+            <Filter onFilterChange={handleFilterChange} />
+    
+            {loading && <p className="text-yellow-400">Cargando webs...</p>}
             <Mensaje mensaje={mensaje} />
-
-            <div className="bizs-container">
+    
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
                 {!loading && webs.map((web) => (
-                    <div key={web.businessCIF} className="web-card">
-                        <h3 className="web-heading">{web.heading}</h3>
-                        <p className="web-city">Ciudad: {web.city}</p>
-                        <p className="web-activity">Actividad: {web.activity}</p>
-                        <div className="web-options">
-                            <button onClick={() => { setSelectedWeb(web); setShowModal(true); }}>
-                                ...
+                    <div key={web.businessCIF} className="bg-gray-800 p-4 rounded-lg shadow-md">
+                        <h3 className="text-xl font-semibold text-blue-300">{web.heading}</h3>
+                        <p className="text-gray-400">Ciudad: {web.city}</p>
+                        <p className="text-gray-400">Actividad: {web.activity}</p>
+                        <div className="flex justify-end mt-4">
+                            <button
+                                className="text-gray-400 hover:text-blue-300"
+                                onClick={() => { setSelectedWeb(web); setShowModal(true); }}
+                            >
+                                Opciones
                             </button>
                         </div>
                     </div>
                 ))}
             </div>
-
+    
             {showModal && selectedWeb && (
-                <div className="modal-overlay">
-                    <div className="modal-content">
-                        <h3>Opciones para {selectedWeb.name}</h3>
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                    <div className="bg-gray-800 p-6 rounded-lg shadow-lg text-white max-w-md w-full">
+                        <h3 className="text-2xl font-bold text-white mb-4">Opciones para {selectedWeb.name}</h3>
                         <button
                             onClick={() => {
-                                setShowModal(false); 
-                                handleUpdateBiz(selectedWeb); 
+                                setShowModal(false);
+                                handleUpdateBiz(selectedWeb);
                             }}
+                            className="w-full py-2 bg-blue-900 hover:bg-blue-700 text-white rounded-lg shadow-md mb-4"
                         >
                             Actualizar comercio
                         </button>
-                        <button onClick={() => handleRecoverBiz(selectedWeb.businessCIF)}>Recuperar comercio</button>
-                        <button onClick={() => setShowModal(false)}>Cerrar</button>
+                        <button
+                            onClick={() => handleRecoverBiz(selectedWeb.businessCIF)}
+                            className="w-full py-2 bg-blue-800 hover:bg-blue-600 text-white rounded-lg shadow-md mb-4"
+                        >
+                            Recuperar comercio
+                        </button>
+                        <button
+                            onClick={() => setShowModal(false)}
+                            className="w-full py-2 bg-red-900 hover:bg-red-700 text-white rounded-lg shadow-md"
+                        >
+                            Cerrar
+                        </button>
                     </div>
                 </div>
             )}
-
+    
             {notification && (
                 <Notification
                     message={notification.message}
@@ -111,6 +125,7 @@ function WebList() {
             )}
         </div>
     );
+    
 }
 
 export default WebList;

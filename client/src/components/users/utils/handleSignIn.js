@@ -16,7 +16,6 @@ async function handleSignIn(body) {
         }
 
         const data = await response.json();
-
         const cookieStore = cookies();
 
         cookieStore.set({
@@ -28,7 +27,7 @@ async function handleSignIn(body) {
         if (data.data.user) {
             cookieStore.set({
                 name: 'user',
-                value: response.data.user,
+                value: JSON.stringify(data.data.user),
                 path: '/'
 
             });

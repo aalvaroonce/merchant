@@ -2,20 +2,18 @@
 
 import { cookies } from "next/headers";
 
-async function handleUpdateBiz(body) {
+async function updateBiz(body, cif) {
     try {
 
         const cookiesStore= cookies();
         const tokenInfo = cookiesStore.get('token')
         const token= tokenInfo.value
-        const biz = JSON.parse(cookiesStore.get('biz').value)
-        const bizCIF= biz.CIF
 
-        const response = await fetch(`${process.env.API_URL}/business/${bizCIF}`, {
+        const response = await fetch(`${process.env.API_URL}/business/${cif}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`,
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify(body),
         });
@@ -39,4 +37,4 @@ async function handleUpdateBiz(body) {
     }
 }
 
-export default handleUpdateBiz;
+export default updateBiz;

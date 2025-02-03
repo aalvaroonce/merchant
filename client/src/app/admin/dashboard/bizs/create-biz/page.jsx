@@ -1,31 +1,28 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import FormularioSignIn from '@/components/formularios/FormularioSignIn';
+import FormularioBiz from '@/components/formularios/FormularioBiz';
 import Mensaje from '@/components/Mensaje';
+import createBiz from '@/components/admin/utils/handleCreateBiz'; 
 import Notification from '@/components/Notification';
-import handleSignIn from '@/components/users/utils/handleSignIn'; 
+import { useRouter } from 'next/navigation';
 
-function SignIn() {
-    const [mensaje, setMensaje] = useState(null);
+function CreateBiz() {
     const [notification, setNotification] = useState(null);
-    const [loading, setLoading] = useState(false);
+    const [mensaje, setMensaje] = useState(null)
     const router= useRouter()
 
     const handleSendData = async (data) => {
-        setLoading(true)
         setMensaje(null); 
 
         try {
-            const result = await handleSignIn(data); 
+            const result = await createBiz(data); 
 
-            if (result.data?.token && result.data?.user?._id) {
+            if (result.data ) {
                 setNotification({ type: "success", message: result.message });
                 setTimeout(() => {
-                    router.push("/user");
+                    router.push("/admin/dashboard");
                 }, 2000);
-
             } else if (result.errors && Array.isArray(result.errors)) {
                 const errorMessages = result.errors.map((error) => error.msg).join(", ");
                 setMensaje({ text: errorMessages, type: "error" });
@@ -34,23 +31,21 @@ function SignIn() {
             }
         } catch (error) {
             setMensaje({ text: error.message || "Error en la conexión", type: "error" });
-        } finally{
-            setLoading(false)
         }
     };
 
     return (
         <>
-            <FormularioSignIn sendData={handleSendData} />
+            <FormularioBiz sendData={handleSendData} />
             {notification && (
                 <Notification
                     message={notification.message}
                     type={notification.type}
                     onClose={() => setNotification(null)}
                 />)}
-            {loading ? <p>Cargando...</p>:mensaje && <Mensaje mensaje={mensaje} />}
+            {mensaje && <Mensaje mensaje={mensaje} />}
         </>
     );
 }
 
-export default SignIn;
+export default CreateBiz;

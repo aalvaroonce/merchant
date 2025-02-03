@@ -3,10 +3,12 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import FormularioLogIn from '@/components/formularios/FormularioLogIn';
+import Notification from '@/components/Notification';
 import Mensaje from '@/components/Mensaje';
 import handleLogin from '@/components/users/utils/handleLogIn';
 
 function LogIn() {
+    const [notification, setNotification] = useState(null);
     const [mensaje, setMensaje] = useState(null);
     const [loading, setLoading] = useState(false);
     const router = useRouter();
@@ -19,17 +21,21 @@ function LogIn() {
             const result = await handleLogin(data);
 
             if (result.data?.token) {
-                setMensaje({ text: result.message, type: 'exito' });  
-                
-                if (result.data.user?.role === 'admin') {
-                    router.push('/admin');
-                } else if (result.data.user?.role === 'user') {
-                    router.push('/user');
-                } else if (result.data.biz?.role === 'biz'){
-                    router.push('/biz');
+                setNotification({ type: "success", message: result.message });
+                const userRole = result.data.user?.role || result.data.biz?.role;
+
+                const redirectMap = {
+                    admin: "/admin",
+                    user: "/user",
+                    biz: "/biz"
+                };
+
+                if (redirectMap[userRole]) {
+                    setTimeout(() => {
+                        router.push(redirectMap[userRole]);
+                    }, 2000);
                 }
             } else if (result.errors && Array.isArray(result.errors)) {
-                console.log(result.errors)
                 const errorMessages = result.errors.map((error) => error.msg).join(', ');
                 setMensaje({ text: errorMessages, type: 'error' });
             } else {
@@ -45,7 +51,14 @@ function LogIn() {
     return (
         <div className="app-container">
             <FormularioLogIn sendData={handleSendData} />
-            {loading ? <p>Cargando...</p> : <Mensaje mensaje={mensaje} />}
+            {notification && (
+                <Notification
+                    message={notification.message}
+                    type={notification.type}
+                    onClose={() => setNotification(null)}
+                />
+            )}
+            {loading ? <p className="text-center mt-4">Cargando...</p> : mensaje && <Mensaje mensaje={mensaje} />}
         </div>
     );
 }

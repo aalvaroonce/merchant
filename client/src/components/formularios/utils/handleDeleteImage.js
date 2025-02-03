@@ -10,10 +10,10 @@ async function deleteImage(imageUrl) {
         const bizCIF= JSON.parse(biz.value).CIF
 
         const response = await fetch(`${process.env.API_URL}/web/memory/deleteimage/${bizCIF}`, {
-            method: "PATCH",
+            method: 'PATCH',
             headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json",
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify({ imageUrl: imageUrl }),
         });

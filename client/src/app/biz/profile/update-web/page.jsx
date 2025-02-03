@@ -1,9 +1,9 @@
 'use client';
 
 import { Suspense, useState } from 'react';
-import FormularioUpdateWeb from '@/components/formularios/FormularioUpdateWeb.jsx';
+import FormularioUpdateWeb from '@/components/formularios/FormularioUpdateWeb';
 import Notification from '@/components/Notification';
-import handleUpdateWeb from '@/components/business/utils/handleUpdateWeb.js';
+import handleUpdateWeb from '@/components/business/utils/handleUpdateWeb';
 import DeleteWeb from '@/components/business/DeleteWeb';
 import { useRouter } from 'next/navigation';
 import deleteWeb from '@/components/business/utils/handleDeleteWeb';
@@ -20,11 +20,8 @@ export default function UpdateWeb() {
                 router.push("/biz/profile");
             }, 2000);
         } catch (error) {
-            console.log(error)
-            setNotification({ message: "Ha ocurrido un error en la actualización." });
-            setTimeout(() => {
-                router.push("/biz/profile");
-            }, 2000);
+            console.error("Error en la actualización:", error);
+            setNotification({ type: "error", message: "Error en la actualización. Intenta nuevamente." });
         }
     };
 
@@ -37,25 +34,27 @@ export default function UpdateWeb() {
                 router.push("/biz/profile");
             }, 2000);
         } catch (error) {
-            setMensaje({ text: error.message, type: "error" });
+            console.error("Error en la eliminación:", error);
+            setNotification({ type: "error", message: "Error al eliminar. Intenta nuevamente." });
             setIsModalOpen(false);
-            setTimeout(() => {
-                router.push("/biz/profile");
-            }, 2000);
         }
     };
 
-
     return (
-        <Suspense fallback={<p>Cargando componente...</p>}>
+        <Suspense fallback={<p className="text-center text-gray-500">Cargando componente...</p>}>
             {notification && (
                 <Notification
                     message={notification.message}
                     type={notification.type}
                     onClose={() => setNotification(null)}
-                />)}
-            <FormularioUpdateWeb sendData={handleSendData} />
-            <DeleteWeb onConfirmAction={handleConfirmAction}/>
+                />
+            )}
+            <div className="max-w-4xl mx-auto bg-gray-800 p-6 rounded-xl shadow-lg">
+                <FormularioUpdateWeb sendData={handleSendData} />
+                    <div className="mt-8">
+                    <DeleteWeb onConfirmAction={handleConfirmAction} />
+                    </div>
+                </div>
         </Suspense>
     );
 }

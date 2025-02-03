@@ -19,15 +19,16 @@ export default function DeleteWeb({ onConfirmAction }) {
 
     return (
         <>
-            <button onClick={() => openModal(true)} className="btn btn-warning">
+        <div className="flex gap-4">
+            <button onClick={() => openModal(true)} className="px-6 py-2 bg-yellow-500 text-white font-semibold rounded-lg hover:bg-yellow-600 transition-all">
                 Inhabilitar Web
             </button>
-            <button onClick={() => openModal(false)} className="btn btn-danger">
+            <button onClick={() => openModal(false)} className="px-6 py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 transition-all">
                 Borrar Web
             </button>
+        </div>
 
             {mensaje && <Mensaje mensaje={mensaje} />}
-
             {isModalOpen && (
                 <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center">
                     <div className="bg-white text-gray-800 p-6 rounded-lg shadow-lg w-96">

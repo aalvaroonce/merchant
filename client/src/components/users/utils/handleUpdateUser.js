@@ -25,14 +25,16 @@ async function updateUser(body) {
 
         const data = await response.json();
 
-        cookiesStore.set({
+        if (user.role != 'admin'){
+            cookiesStore.set({
             name: 'user',
-            value: JSON.stringify(data.data.user), 
+            value: JSON.stringify(data.data), 
             path: '/',
-        });
+            })}
+
         return data;
     } catch (error) {
-        console.error("Error updating user:", error);
+        console.log("Error updating user:", error);
         throw new Error("No se pudo actualizar el usuario. Intenta nuevamente.");
     }
 }

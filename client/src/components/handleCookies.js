@@ -8,6 +8,7 @@ export default async function handleCookies() {
         cookieStore.set('token', '', { path: '/', expires: new Date(0) });
         cookieStore.set('user', '', { path: '/', expires: new Date(0) });
         cookieStore.set('biz', '', { path: '/', expires: new Date(0) });
+        cookieStore.set('web', '', { path: '/', expires: new Date(0) });
         return { message: 'Sesión cerrada exitosamente', ok: true };
 
     } catch(error){

@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 
-function FormularioEmail({ sendData, onCancel }) {
+function FormularioEmail({ sendData, onClose }) {
     const { register, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {
             subject: "",
@@ -58,7 +58,7 @@ function FormularioEmail({ sendData, onCancel }) {
                 <button
                     type="button"
                     className="mr-4 bg-gray-300 px-4 py-2 rounded-md hover:bg-gray-400"
-                    onClick={onCancel}
+                    onClick={onClose}
                 >
                     Cancelar
                 </button>

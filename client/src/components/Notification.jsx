@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
 function Notification({ message, type, onClose }) {
     useEffect(() => {
@@ -9,17 +9,28 @@ function Notification({ message, type, onClose }) {
         return () => clearTimeout(timer);
     }, [onClose]);
 
+    const isSuccess = type === "success";
+    const baseStyles = "fixed inset-0 flex items-center justify-center z-50";
+    const cardStyles =
+        "p-6 rounded-lg text-center shadow-lg transform transition-all duration-300";
+    const successStyles =
+        "bg-green-100 text-green-700 border border-green-300";
+    const errorStyles = "bg-red-100 text-red-700 border border-red-300";
+
     return (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
-            <div className={`bg-white p-4 rounded-lg shadow-lg max-w-md w-full text-center ${type === "success" ? "border-green-500 border" : "border-red-500 border"}`}>
-                <p className={`text-lg font-semibold ${type === "success" ? "text-green-500" : "text-red-500"}`}>
-                    {type === "success" ? "¡Éxito!" : "¡Error!"}
-                </p>
-                <p className="text-gray-600 mt-2">{message}</p>
+        <div className={baseStyles}>
+            <div
+                className={`${cardStyles} ${
+                    isSuccess ? successStyles : errorStyles
+                }`}
+            >
+                <h2 className="text-lg font-bold">
+                    {isSuccess ? "¡Éxito!" : "¡Error!"}
+                </h2>
+                <p className="mt-2">{message}</p>
             </div>
         </div>
     );
 }
 
 export default Notification;
-

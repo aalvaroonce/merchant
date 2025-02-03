@@ -11,6 +11,8 @@ async function handleLogin(body) {
             body: JSON.stringify(body),
         });
 
+        console.log(response)
+
         if (!response.ok) {
             throw new Error(`HTTP Error: ${response.status}`);
         }
@@ -40,7 +42,25 @@ async function handleLogin(body) {
             cookieStore.set({
                 name: 'biz',
                 value: JSON.stringify(data.data.biz), 
+                path: '/'
             });
+
+            const responseWeb = await fetch(`${process.env.API_URL}/web/${data.data.biz.CIF}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+
+            if (responseWeb.ok) {
+                const dataWeb = await responseWeb.json();
+            
+                cookieStore.set({
+                    name: 'web',
+                    value: JSON.stringify(dataWeb.data), 
+                    path: '/'
+                });
+            }
         }
 
         return data;

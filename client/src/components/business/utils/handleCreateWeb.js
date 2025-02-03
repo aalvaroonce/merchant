@@ -32,7 +32,7 @@ async function handleCreateWeb(body) {
         cookiesStore.set({
             name: 'web',
             value: JSON.stringify(data.data),
-            path: '/',
+            path: '/'
         });
         
         return data;
